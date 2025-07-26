@@ -1,0 +1,295 @@
+---
+// Contact Form - Zero JS form handling with native form submission
+---
+
+<form class="contact-form" action="#" method="POST" id="contact-form">
+  <div class="form-group">
+    <label for="name" class="form-label">Name *</label>
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      class="form-input" 
+      required 
+      placeholder="Your full name"
+    />
+  </div>
+  
+  <div class="form-group">
+    <label for="email" class="form-label">Email *</label>
+    <input 
+      type="email" 
+      id="email" 
+      name="email" 
+      class="form-input" 
+      required 
+      placeholder="your.email@example.com"
+    />
+  </div>
+  
+  <div class="form-group">
+    <label for="phone" class="form-label">Phone</label>
+    <input 
+      type="tel" 
+      id="phone" 
+      name="phone" 
+      class="form-input" 
+      placeholder="+91 98765 43210"
+    />
+  </div>
+  
+  <div class="form-group">
+    <label for="subject" class="form-label">Subject *</label>
+    <input 
+      type="text" 
+      id="subject" 
+      name="subject" 
+      class="form-input" 
+      required 
+      placeholder="What's this about?"
+    />
+  </div>
+  
+  <div class="form-group">
+    <label for="message" class="form-label">Message *</label>
+    <textarea 
+      id="message" 
+      name="message" 
+      class="form-textarea" 
+      required 
+      placeholder="Tell us about your query..."
+      rows="5"
+    ></textarea>
+  </div>
+  
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary btn-lg">
+      <span class="btn-text">Start The Conversation</span>
+      <span class="btn-spinner" style="display: none;">Delivering Your Message...</span>
+    </button>
+  </div>
+  
+  <div class="form-success" id="form-success" style="display: none;" role="alert">
+    <p>Thank you! Your message has been sent successfully. We'll get back to you soon.</p>
+  </div>
+
+  <div class="form-error" id="form-error" style="display: none;" role="alert">
+    <p>There was an error delivering your message. Please try again later or shoot us an email at <a href="mailto:contact@hack-nocturne.in">contact@hack-nocturne.in</a>.</p>
+  </div>
+</form>
+
+<style>
+  .contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    margin-bottom: var(--space-4);
+  }
+  
+  .form-label {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-white);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-normal);
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-frosted);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-white);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+  }
+  
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+  
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  }
+  
+  .form-input:invalid:not(:placeholder-shown),
+  .form-select:invalid:not(:placeholder-shown),
+  .form-textarea:invalid:not(:placeholder-shown),
+  .form-input.error,
+  .form-select.error,
+  .form-textarea.error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+  
+  .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right var(--space-2) center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: var(--space-8);
+    appearance: none;
+  }
+  
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .form-actions {
+    text-align: center;
+    margin-top: var(--space-6);
+  }
+  
+  .form-success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    margin-top: var(--space-4);
+    text-align: center;
+  }
+  
+  .form-success p {
+    color: #22c55e;
+    margin: 0;
+  }
+
+  .form-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    margin-top: var(--space-4);
+    text-align: center;
+  }
+
+  .form-error p {
+    color: #ef4444;
+    margin: 0;
+  }
+  
+  .btn-spinner {
+    display: none !important;
+  }
+  
+  .form-submitting .btn-text {
+    display: none;
+  }
+  
+  .form-submitting .btn-spinner {
+    display: inline !important;
+  }
+  
+  .form-submitting .btn {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successMessage = document.getElementById('form-success');
+    const errorMessage = document.getElementById('form-error');
+    
+    if (!form) return;
+    
+    function validateField(field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+      let isValid = true;
+      
+      if (field.hasAttribute('required') && !field.value.trim()) {
+        isValid = false;
+      } else if (field.type === 'email' && field.value.trim()) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(field.value.trim())) {
+          isValid = false;
+        }
+      } else if (field.type === 'tel' && field.value.trim()) {
+        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+        if (!phoneRegex.test(field.value.trim().replace(/\s+/g, ''))) {
+          isValid = false;
+        }
+      }
+      
+      if (isValid) {
+        field.classList.remove('error');
+      } else {
+        field.classList.add('error');
+      }
+      
+      return isValid;
+    }
+    
+    const fields = form.querySelectorAll('input, select, textarea');
+    fields.forEach(field => {
+      field.addEventListener('blur', () => {
+        validateField(field as HTMLInputElement);
+      });
+      
+      field.addEventListener('input', () => {
+        if (field.classList.contains('error')) {
+          validateField(field as HTMLInputElement);
+        }
+      });
+    });
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      alert("Not implemented yet");
+      return;
+      
+      let isFormValid = true;
+      fields.forEach(field => {
+        if (!validateField(field as HTMLInputElement)) {
+          isFormValid = false;
+        }
+      });
+      
+      if (!isFormValid) {
+        // Focus on first error field
+        const firstErrorField = form.querySelector('.error') as HTMLElement;
+        firstErrorField?.focus();
+        return;
+      }
+      
+      form.classList.add('form-submitting');
+      
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        
+        // ToDo: Replace with actual API call
+        // For now, show success message and optionally open email client
+        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+        
+        // Display success message
+        if (successMessage) {
+          successMessage.style.display = 'block';
+        }
+        
+        form.reset();
+        
+        // ToDo: Open email client as fallback
+        // window.location.href = `mailto:contact@hack-nocturne.in?subject=${subject}&body=${body}`;
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error sending your message. Please try again or contact us directly at contact@hack-nocturne.in');
+      } finally {
+        form.classList.remove('form-submitting');
+      }
+    });
+  });
+</script>

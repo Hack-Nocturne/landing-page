@@ -1,0 +1,384 @@
+---
+interface GalleryImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+// Gallery images for last year's events
+const galleryImages: GalleryImage[] = [
+  {
+    src: "/images/gallery/hnt-night-view.webp",
+    alt: "Hack-Nocturne 2025 - Night View",
+    caption: "Everything was set for the night of innovation"
+  },
+  {
+    src: "/images/gallery/hnt-oc-1.webp",
+    alt: "Hack-Nocturne 2025 - Opening Ceremony",
+    caption: "Principal addressing the participants in the Opening Ceremony"
+  },
+  {
+    src: "/images/gallery/hnt-oc-2.webp",
+    alt: "Hack-Nocturne 2025 - Opening Ceremony",
+    caption: "Volunteers & Judges helping participants in Opening Ceremony"
+  },
+  {
+    src: "/images/gallery/hnt-proj-show-1.webp",
+    alt: "Hack-Nocturne 2025 - Project Showcase",
+    caption: "Final presentations and project demos"
+  },
+  {
+    src: "/images/gallery/hnt-proj-show-2.webp",
+    alt: "Hack-Nocturne 2025 - Project Showcase",
+    caption: "Final presentations and project demos"
+  },
+  {
+    src: "/images/gallery/hnt-win-1.webp",
+    alt: "Hack-Nocturne 2025 - Winners",
+    caption: "Meet the winning team"
+  },
+  {
+    src: "/images/gallery/hnt-win-2.webp",
+    alt: "Hack-Nocturne 2025 - Winners",
+    caption: "Meet the runner-up team"
+  },
+  {
+    src: "/images/gallery/hnt-win-3.webp",
+    alt: "Hack-Nocturne 2025 - Winners",
+    caption: "Meet the second runner-up team"
+  },
+  {
+    src: "/images/gallery/hnt-win-quiz.webp",
+    alt: "Hack-Nocturne 2025 - Quiz Winners",
+    caption: "Awards and recognition for extra activities"
+  },
+  {
+    src: "/images/gallery/hnt-tm-long.webp",
+    alt: "Hack-Nocturne 2025 - Team Moments",
+    caption: "Organizing team behind the Event"
+  }
+];
+---
+
+<div class="gallery-carousel">
+  <div class="carousel-container">
+    <div class="carousel-track" id="carouselTrack">
+      {galleryImages.map((image, index) => (
+        <div class="carousel-slide" data-index={index}>
+          <div class="image-container">
+            <img 
+              data-src={image.src}
+              src=""
+              alt={image.alt}
+              class="lazy-load"
+              onerror="this.src='/images/placeholder-gallery.svg'"
+            />
+            {image.caption && (
+              <div class="image-caption">
+                <p>{image.caption}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <button class="carousel-btn carousel-prev" id="prevBtn" aria-label="Previous image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15,18 9,12 15,6"></polyline>
+      </svg>
+    </button>
+    
+    <button class="carousel-btn carousel-next" id="nextBtn" aria-label="Next image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9,18 15,12 9,6"></polyline>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="carousel-indicators">
+    {galleryImages.map((_, index) => (
+      <button 
+        class={`indicator ${index === 0 ? 'active' : ''}`}
+        data-index={index}
+        aria-label={`Go to slide ${index + 1}`}
+      ></button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .gallery-carousel {
+    max-width: 100%;
+  }
+  
+  .carousel-container {
+    position: relative;
+    overflow: hidden;
+    /* max-height: 320px; */
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-secondary);
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 16/9;
+  }
+  
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+  
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .image-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background: var(--color-bg-primary);
+    transition: opacity 0.3s ease;
+  }
+  
+  .image-container img.lazy-load {
+    opacity: 0.3;
+    background-image: linear-gradient(
+      45deg,
+      var(--color-bg-secondary) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--color-bg-secondary) 75%
+    );
+    background-size: 20px 20px;
+    animation: loading-shimmer 1.5s infinite;
+  }
+  
+  .image-container img.loaded {
+    opacity: 1;
+  }
+  
+  @keyframes loading-shimmer {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 20px; }
+  }
+  
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      transparent,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.9)
+    );
+    padding: var(--space-6) var(--space-4) var(--space-4);
+    color: var(--color-white);
+  }
+  
+  .image-caption p {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+    text-align: center;
+  }
+  
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.8;
+  }
+  
+  .carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .carousel-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  
+  .carousel-prev {
+    left: var(--space-4);
+  }
+  
+  .carousel-next {
+    right: var(--space-4);
+  }
+  
+  .carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-gray-400);
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .indicator.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: scale(1.2);
+  }
+  
+  .indicator:hover {
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    .carousel-container {
+      aspect-ratio: 4/3;
+    }
+    
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .carousel-prev {
+      left: var(--space-2);
+    }
+    
+    .carousel-next {
+      right: var(--space-2);
+    }
+    
+    .image-caption {
+      padding: var(--space-4) var(--space-3) var(--space-3);
+    }
+    
+    .image-caption p {
+      font-size: var(--font-size-xs);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carousel-container {
+      aspect-ratio: 1/1;
+    }
+    
+    .carousel-indicators {
+      gap: var(--space-2);
+    }
+    
+    .indicator {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  
+  .gallery-carousel {
+    contain: layout style paint;
+  }
+  
+  .carousel-track {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0); /* Force hardware acceleration */
+  }
+  
+  .carousel-slide {
+    contain: layout style paint;
+  }
+  
+  .carousel-slide img {
+    will-change: auto;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+  
+  .carousel-btn {
+    contain: layout style paint;
+  }
+</style>
+
+<script>
+  // Lightweight initialization - truly defer until gallery is near viewport
+  let isInitialized = false;
+  let observer = null;
+  
+  const initGallery = () => {
+    if (isInitialized) return;
+    isInitialized = true;
+    
+    // Dynamically import only when gallery is actually needed
+    import('../utils/gallery-carousel.js').then(module => {
+      new module.GalleryCarousel();
+    }).catch(() => {
+      console.warn('Gallery carousel failed to load, using basic functionality');
+      initBasicGallery();
+    });
+  };
+  
+  const initBasicGallery = () => {
+    const images: NodeListOf<HTMLImageElement> = document.querySelectorAll('.gallery-carousel img[data-src]');
+    images.forEach(img => {
+      const src = img.getAttribute('data-src');
+      if (src) {
+        img.src = src;
+        img.classList.remove('lazy-load');
+        img.classList.add('loaded');
+      }
+    });
+  };
+  
+  // Setup observer only when DOM is ready - don't use requestIdleCallback
+  const setupObserver = () => {
+    const gallery = document.querySelector('.gallery-carousel');
+    if (!gallery) return;
+
+    let observer: IntersectionObserver | null = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          initGallery();
+          observer?.disconnect();
+          observer = null;
+        }
+      });
+    }, { 
+      threshold: 0.05, // Reduced threshold
+      rootMargin: '50px' // Reduced margin to load closer to viewport
+    });
+    
+    observer.observe(gallery);
+  };
+  
+  // Only setup observer when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupObserver);
+  } else {
+    setupObserver();
+  }
+</script>

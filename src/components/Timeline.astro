@@ -1,0 +1,315 @@
+---
+// Timeline Component with snaky curvy design
+const timelineEvents = [
+  {
+    time: "28th Mar - 8:00 AM to 10:00 AM",
+    title: "Participant reporting time",
+    description: "Participants arrive, register, and form teams. Get ready to meet your potential collaborators and prepare for an exciting hackathon journey.",
+  },
+  {
+    time: "28th Mar - 10:15 AM to 12:00 PM",
+    title: "Welcome & Opening Remarks",
+    description: "Official welcome by organizers, introduction to the hackathon theme, rules, and expectations. Get inspired and motivated!",
+  },
+  {
+    time: "28th Mar - 12:15 PM",
+    title: "Hack Begins",
+    description: "It's time for brainstorming, planning, and developing your innovative projects.",
+  },
+  {
+    time: "28th Mar - 2:00 PM",
+    title: "Lunch Break",
+    description: "Refuel and recharge. Network with fellow participants and take a short mental break.",
+  },
+  {
+    time: "28th Mar - 5:00 PM",
+    title: "Knock-Knock | Check-In & Snacks",
+    description: "Mentors and organizers provide guidance and support. Teams can seek advice and overcome challenges. Change your mood with great snacks.",
+  },
+  {
+    time: "28th Mar - 9:00 PM",
+    title: "Dinner Break",
+    description: "Enjoy a delicious meal and take a break from coding. Re-energize for the final stretch.",
+  },
+  {
+    time: "29th Mar - 1:00 AM",
+    title: "Refreshments & Fun",
+    description: "Let's have some late-night snacks, games, and activities to keep you energized and motivated.",
+  },
+  {
+    time: "29th Mar - 9:00 AM",
+    title: "Breakfast",
+    description: "Start your day with a healthy breakfast and get ready for the final hours of hacking.",
+  },
+  {
+    time: "29th Mar - 12:15 PM",
+    title: "Hack Ends | Submission Deadline",
+    description: "Submit your projects and get ready to present your innovative solutions to the judges.",
+  },
+  {
+    time: "29th Mar - 12:15 PM to 2:30 PM",
+    title: "Judging & Conclusion",
+    description: "Judges evaluate the projects based on creativity, technicality, feasibility and impact. Get ready to showcase your hard work!",
+  },
+  {
+    time: "29th Mar - 2:30 PM to 3:30 PM",
+    title: "Prize Distribution & Closing Ceremony",
+    description: "Celebrate your achievements, network with fellow participants, and enjoy the closing ceremony.",
+  },
+  {
+    time: "29th Mar - 3:30 PM",
+    title: "Hackathon Concludes",
+    description: "Thank you for your participation, dedication, and hard work. See you at the next hackathon!",
+  }
+];
+---
+
+<div class="timeline-container">
+  {timelineEvents.length > 0 ? (
+    <div class="timeline">
+      {timelineEvents.map((event, index) => (
+        <div class={`timeline-item ${index % 2 === 0 ? 'timeline-left' : 'timeline-right'}`}>
+          <div class="timeline-content">
+            <div class="timeline-time">{event.time}</div>
+            <h3 class="timeline-title">{event.title}</h3>
+            <p class="timeline-description">{event.description}</p>
+          </div>
+          <div class="timeline-marker">
+            <div class="timeline-dot"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div class="timeline-placeholder">
+      <div class="placeholder-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path 
+            d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <h3 class="placeholder-title">Timeline Coming Soon!</h3>
+      <p class="placeholder-description">
+        We are brainstorming for a tangy timeline, stay tuned for updates!
+      </p>
+    </div>
+  )}
+</div>
+
+<style>
+  .timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .timeline {
+    position: relative;
+    padding: var(--space-8) 0;
+  }
+  
+  /* Central timeline line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      var(--color-primary),
+      var(--color-secondary),
+      var(--color-accent),
+      var(--color-primary)
+    );
+    transform: translateX(-50%);
+    border-radius: var(--radius-full);
+  }
+  
+  .timeline-item {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-4) 0;
+    position: relative;
+    width: 50%;
+  }
+  
+  .timeline-item.timeline-right {
+    align-self: flex-end;
+    justify-content: flex-start;
+    left: 50%;
+  }
+  
+  .timeline-content {
+    background: var(--color-frosted);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    position: relative;
+    max-width: 400px;
+    margin: 0 var(--space-8);
+  }
+  
+  .timeline-content:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    transform: translateY(-50%);
+  }
+
+  .timeline-left {
+    --dir: 1;
+  }
+  .timeline-right {
+    --dir: -1;
+  }
+  
+  .timeline-left .timeline-content::before {
+    right: -24px;
+    border-left-color: var(--color-frosted-border);
+  }
+  
+  .timeline-right .timeline-content::before {
+    left: -24px;
+    border-right-color: var(--color-frosted-border);
+  }
+  
+  .timeline-time {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-2);
+  }
+  
+  .timeline-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-3);
+    line-height: var(--line-height-tight);
+  }
+  
+  .timeline-description {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-200);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+  
+  .timeline-marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(calc(50% * var(--dir)), -50%);
+    z-index: 10;
+  }
+  
+  .timeline-dot {
+    width: 20px;
+    height: 20px;
+    background: var(--color-primary);
+    border: 4px solid var(--color-bg-primary);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .timeline-item:hover .timeline-dot {
+    background: var(--color-accent);
+    box-shadow: var(--shadow-glow-accent);
+    transform: scale(1.2);
+  }
+  
+  /* Mobile responsive design */
+  @media (max-width: 768px) {
+    .timeline::before {
+      left: var(--space-6);
+    }
+    
+    .timeline-item {
+      width: 100%;
+      padding-left: var(--space-12);
+      justify-content: flex-start;
+    }
+    
+    .timeline-item.timeline-right {
+      left: 0;
+    }
+    
+    .timeline-content {
+      margin: 0;
+      max-width: none;
+    }
+    
+    .timeline-content::before {
+      display: none;
+    }
+
+    .timeline-marker {
+      /* display: none; */
+      transform: translate(-168%, -50%);
+    }
+  }
+  
+  /* Placeholder styles when no timeline is available */
+  .timeline-placeholder {
+    text-align: center;
+    padding: var(--space-16) var(--space-8);
+    background: var(--color-frosted);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-2xl);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .placeholder-icon {
+    color: var(--color-accent);
+    margin-bottom: var(--space-6);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .placeholder-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+  }
+  
+  .placeholder-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-200);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+  }
+  
+  @media (min-width: 640px) {
+    .timeline-content {
+      max-width: 450px;
+    }
+    
+    .timeline-title {
+      font-size: var(--font-size-2xl);
+    }
+    
+    .timeline-description {
+      font-size: var(--font-size-lg);
+    }
+  }
+</style>

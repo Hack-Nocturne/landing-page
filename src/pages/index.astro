@@ -1,16 +1,664 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import CountdownTimer from '../components/CountdownTimer.astro';
+import ContactForm from '../components/ContactForm.astro';
+import FAQ from '../components/FAQ.astro';
+import Timeline from '../components/Timeline.astro';
+import Sponsors from '../components/Sponsors.astro';
+import Prize from '../components/Prize.astro';
+import Footer from '../components/Footer.astro';
 
+const title = "Hack-Nocturne '25 | The Premier Hackathon Experience";
+const description = "Join Hack-Nocturne '25, a 24-hour hackathon at Sir MVIT Bengaluru on March 28-29. Open track, ₹50,000+ in prizes, exciting swags and refreshments, internship opportunities with Zintlr. Through the Night, Ideas Take Flight!";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={title} description={description}>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 btn btn-primary" style="z-index: 50000;">
+    Skip to main content
+  </a>
+  
+  <Header />
+  
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-text">March 28-29, 2025 • Bengaluru, India</span>
+        </div>
+        
+        <h1 class="hero-title text-gradient text-glow">
+          Hack-Nocturne '25
+        </h1>
+        
+        <p class="hero-subtitle">
+          Through the Night, Ideas Take Flight
+        </p>
+        
+        <p class="hero-description">
+          A premier 24-hour hackathon experience brought to you by TechHub Community & Glug MVIT, 
+          the technical clubs of Sir M. Visvesvaraya Institute Of Technology. 
+          Join us for innovation, creativity, and collaboration!
+        </p>
+        
+        <div class="hero-buttons">
+          <div class="button-group">
+            <a href="/assets/participants-brochure-25.pdf" class="btn btn-secondary btn-lg" target="_blank" rel="noopener">
+              📋 Brochure
+            </a>
+            <a href="https://devfolio.co/code-of-conduct" class="btn btn-secondary btn-lg" target="_blank" rel="noopener">
+              📜 Rules
+            </a>
+          </div>
+          <div class="button-group mt-4">
+            <a href="https://hack-nocturne.devfolio.co/" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+              🚀 Apply with Devfolio
+            </a>
+          </div>
+        </div>
+        
+        <div class="hero-organizers">
+          <p class="organizers-label">Presented By</p>
+          <div class="organizers-logos">
+            <a href="https://twitter.com/_techhub" target="_blank" rel="noopener" class="organizer-link">
+              <img src="/images/techhub.webp" alt="TechHub Community" width="60" height="60" />
+            </a>
+            <a href="https://www.instagram.com/glugmvit" target="_blank" rel="noopener" class="organizer-link">
+              <img src="/images/glug.webp" alt="Glug MVIT" width="60" height="60" />
+            </a>
+          </div>
+        </div>
+        
+        <CountdownTimer />
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">About Us</h2>
+          <p class="section-subtitle">
+            Meet the driving forces behind Hack-Nocturne '25
+          </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-8 mt-12">
+          <div class="card">
+            <div class="club-header">
+              <img src="/images/techhub.webp" alt="TechHub Community" width="60" height="60" class="club-logo" />
+              <div>
+                <h3 class="club-name">TechHub Community</h3>
+                <p class="club-tagline">Innovate • Create • Connect</p>
+              </div>
+            </div>
+            <p class="club-description">
+              TechHub is the premier technical community of Sir MVIT, fostering innovation and 
+              technological excellence among students. We organize workshops, hackathons, and 
+              tech talks to bridge the gap between academia and industry.
+            </p>
+          </div>
+          
+          <div class="card">
+            <div class="club-header">
+              <img src="/images/glug.webp" alt="Glug MVIT" width="60" height="60" class="club-logo" />
+              <div>
+                <h3 class="club-name">Glug MVIT</h3>
+                <p class="club-tagline">GNU/Linux Users Group</p>
+              </div>
+            </div>
+            <p class="club-description">
+              Glug MVIT is dedicated to promoting open-source technologies and Linux systems. 
+              We conduct workshops on system administration, open-source development, and 
+              contribute to the global FOSS community.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Details Section -->
+    <section id="details" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Key Details</h2>
+          <p class="section-subtitle">
+            Everything you need to know about Hack-Nocturne '25
+          </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-6 mt-12">
+          <!-- Tracks Section -->
+          <div class="detail-card-compact">
+            <div class="detail-icon-small">🎯</div>
+            <h3 class="detail-title-compact">Tracks</h3>
+            <div class="track-chips">
+              <span class="track-chip">AI & ML</span>
+              <span class="track-chip">Network & Platform Security</span>
+              <span class="track-chip">Blockchain/Web3</span>
+              <span class="track-chip">App & Web Dev</span>
+              <span class="track-chip">Open Innovation</span>
+            </div>
+          </div>
+          
+          <!-- Why Participate Section -->
+          <div class="detail-card-compact">
+            <div class="detail-icon-small">💡</div>
+            <h3 class="detail-title-compact">Why Participate?</h3>
+            <div class="participation-grid">
+              <div class="participation-item">
+                <div class="participation-icon">📚</div>
+                <div class="participation-content">
+                  <h4 class="participation-title">Learn</h4>
+                  <p class="participation-desc">Master cutting-edge technologies</p>
+                </div>
+              </div>
+              <div class="participation-item">
+                <div class="participation-icon">🛠️</div>
+                <div class="participation-content">
+                  <h4 class="participation-title">Build</h4>
+                  <p class="participation-desc">Create impactful solutions</p>
+                </div>
+              </div>
+              <div class="participation-item">
+                <div class="participation-icon">🤝</div>
+                <div class="participation-content">
+                  <h4 class="participation-title">Collaborate</h4>
+                  <p class="participation-desc">Network with like-minded innovators</p>
+                </div>
+              </div>
+              <div class="participation-item">
+                <div class="participation-icon">🏆</div>
+                <div class="participation-content">
+                  <h4 class="participation-title">Win</h4>
+                  <p class="participation-desc">Claim exciting prizes & internships</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="calendar-row">
+          <a 
+            href="https://www.google.com/calendar/render?action=TEMPLATE&text=Hack-Nocturne%20'25&dates=20250328T000000Z/20250329T000000Z&details=Through%20the%20Night%2C%20Ideas%20Take%20Flight%0A%0AWebsite%3A%20https%3A%2F%2Fhack-nocturne.in&location=Sir%20M.%20Visvesvaraya%20Institute%20of%20Technology%2C%20International%20Airport%20Road%2C%20Hunasamaranahalli%2C%20Yelahanka%2C%20Bengaluru%2C%20Karnataka%20562157&ctz=Asia/Kolkata"
+            class="btn btn-accent btn-lg"
+            target="_blank"
+            rel="noopener"
+          >
+            📅 Add to Google Calendar
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prizes Section -->
+    <section id="prizes" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Prizes</h2>
+          <p class="section-subtitle">
+            Exciting rewards and swags await the most innovative minds
+          </p>
+          <div class="total-prize">
+            <span class="prize-amount">₹50,000+</span>
+            <span class="prize-label">Total Prize Pool</span>
+          </div>
+        </div>
+        
+        <Prize />
+      </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Timeline</h2>
+          <p class="section-subtitle">
+            24-hour journey from idea to implementation
+          </p>
+        </div>
+        
+        <Timeline />
+      </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Sponsors</h2>
+          <p class="section-subtitle">
+            Partnering with industry leaders to make innovation possible
+          </p>
+        </div>
+        
+        <Sponsors />
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-subtitle">
+            Got questions? We've got answers!
+          </p>
+        </div>
+        
+        <FAQ />
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title">Contact Us</h2>
+          <p class="section-subtitle">
+            Have a question or want to get involved? Reach out to us!
+          </p>
+        </div>
+        
+        <ContactForm />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(139, 69, 255, 0.2), rgba(251, 191, 36, 0.15));
+    border: 1px solid rgba(139, 69, 255, 0.3);
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(139, 69, 255, 0.1), 0 2px 6px rgba(251, 191, 36, 0.1);
+  }
+  
+  .badge-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, #c084fc, #fbbf24);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #c084fc; /* fallback for browsers that don't support background-clip */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .hero-title {
+    margin-bottom: 0.25rem;
+  }
+  
+  .hero-subtitle {
+    font-style: italic;
+    font-weight: 800;
+    color: #c084fc;
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-description {
+    margin-bottom: 2rem;
+    max-width: 600px;
+    padding: 0 1rem;
+    margin: 0 auto 2rem auto;
+  }
+  
+  .hero-buttons {
+    margin-bottom: var(--space-12);
+  }
+  
+  .button-group {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .hero-organizers {
+    margin-bottom: var(--space-8);
+  }
+  
+  .organizers-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-300);
+    margin-bottom: var(--space-4);
+  }
+  
+  .organizers-logos {
+    display: flex;
+    gap: var(--space-6);
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .organizers-logos img {
+    border-radius: var(--radius-full);
+  }
+  
+  .organizer-link {
+    opacity: 0.9;
+    border-radius: var(--radius-full);
+    transition: opacity var(--transition-fast);
+  }
+  
+  .organizer-link:hover {
+    opacity: 1;
+  }
+  
+  /* Section Headers */
+  .section-header {
+    margin-bottom: var(--space-12);
+  }
+  
+  .section-title {
+    margin-bottom: var(--space-4);
+  }
+  
+  .section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-300);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* About Section */
+  .club-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .club-header img {
+    border-radius: var(--radius-full);
+  }
+  
+  .club-logo {
+    border-radius: var(--radius-lg);
+  }
+  
+  .club-name {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-1);
+  }
+  
+  .club-tagline {
+    font-size: var(--font-size-sm);
+    color: #cf9fff;
+    margin: 0;
+  }
+  
+  .club-description {
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .detail-card {
+    text-align: center;
+    background: var(--color-frosted);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+  }
+  
+  .detail-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-primary);
+  }
+  
+  .detail-card-compact {
+    background: var(--color-frosted);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    text-align: center;
+  }
+  
+  .detail-card-compact:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+  
+  .detail-icon-small {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-3);
+  }
+  
+  .detail-title-compact {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-4);
+    color: var(--color-white);
+  }
+  
+  .track-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+  
+  .track-chip {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: var(--color-white);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+  }
+  
+  .track-chip:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(139, 69, 255, 0.3);
+  }
+  
+  .participation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    text-align: left;
+  }
+  
+  .participation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: rgba(139, 69, 255, 0.1);
+    border-radius: var(--radius-md);
+  }
+  
+  .participation-item:hover {
+    background: rgba(139, 69, 255, 0.2);
+    transform: translateY(-1px);
+  }
+  
+  .participation-icon {
+    font-size: var(--font-size-xl);
+    flex-shrink: 0;
+  }
+  
+  .participation-content {
+    flex: 1;
+  }
+  
+  .participation-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+    margin-bottom: var(--space-1);
+  }
+  
+  .participation-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-300);
+    margin: 0;
+    line-height: var(--line-height-tight);
+  }
+  
+  .calendar-row {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
+  }
+  
+  .detail-icon {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .detail-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-6);
+  }
+  
+  .detail-content {
+    text-align: left;
+  }
+  
+  .track-name {
+    font-size: var(--font-size-lg);
+    color: var(--color-accent);
+    margin-bottom: var(--space-3);
+  }
+  
+  .track-description {
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .benefits-list li {
+    padding: var(--space-2) 0;
+    color: var(--color-gray-200);
+  }
+  
+  .calendar-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .calendar-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .calendar-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-300);
+  }
+  
+  .calendar-value {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+  }
+  
+  .total-prize {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+  }
+  
+  .prize-amount {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-accent);
+    text-shadow: var(--shadow-glow-accent);
+  }
+  
+  .prize-label {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-300);
+  }
+  
+  .prize-card {
+    background: var(--color-frosted);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    text-align: center;
+  }
+  
+  .prize-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .prize-description {
+    color: var(--color-gray-300);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .plus-more-compact {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+  }
+  
+  .plus-more {
+    font-size: var(--font-size-2xl);
+    color: var(--color-gray-400);
+  }
+  
+  @media (max-width: 640px) {
+    .participation-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .track-chips {
+      justify-content: center;
+    }
+    
+    .track-chip {
+      font-size: var(--font-size-xs);
+      padding: var(--space-1) var(--space-3);
+    }
+    
+    .prize-header {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--space-2);
+    }
+    
+    .prize-info {
+      text-align: center;
+    }
+  }
+  
+  @media (min-width: 640px) {
+    .social-grid {
+      flex-direction: row;
+    }
+  }
+</style>

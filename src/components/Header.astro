@@ -1,0 +1,243 @@
+---
+// No JavaScript needed - pure CSS implementation
+---
+
+<header class="header" id="header">
+  <!-- Pure CSS mobile menu checkbox inside header -->
+  <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox" />
+  <div class="header-content">
+    <a href="#hero" class="logo" aria-label="Hack-Nocturne '25 Homepage">
+      <img src="/logo.webp" alt="Hack-Nocturne Logo" width="40" height="40" />
+      <span>Hack-Nocturne</span>
+    </a>
+    
+    <!-- Desktop Navigation -->
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#details" class="nav-link">Details</a></li>
+        <li><a href="#prizes" class="nav-link">Prizes</a></li>
+        <li><a href="#timeline" class="nav-link">Timeline</a></li>
+        <li><a href="#sponsors" class="nav-link">Sponsors</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+    
+    <!-- Mobile Menu Button - Pure CSS -->
+    <label for="mobile-menu-toggle" class="mobile-menu-button" aria-label="Toggle mobile menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </label>
+    
+    <!-- Mobile Navigation -->
+    <nav class="nav-mobile" aria-label="Mobile navigation">
+      <ul class="nav-mobile-list">
+        <li><a href="#about" class="nav-mobile-link">About</a></li>
+        <li><a href="#details" class="nav-mobile-link">Details</a></li>
+        <li><a href="#prizes" class="nav-mobile-link">Prizes</a></li>
+        <li><a href="#timeline" class="nav-mobile-link">Timeline</a></li>
+        <li><a href="#sponsors" class="nav-mobile-link">Sponsors</a></li>
+        <li><a href="#faq" class="nav-mobile-link">FAQ</a></li>
+        <li><a href="#contact" class="nav-mobile-link">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    background: var(--color-frosted);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-frosted-border);
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+    color: var(--color-white);
+    text-decoration: none;
+  }
+  
+  .logo:hover {
+    transform: scale(1.05);
+  }
+  
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Desktop Navigation */
+  .nav-desktop {
+    display: none;
+  }
+  
+  .nav-list {
+    display: flex;
+    list-style: none;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-link {
+    color: var(--color-gray-200);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    position: relative;
+  }
+  
+  .nav-link:hover {
+    color: var(--color-white);
+    background: var(--color-frosted);
+  }
+  
+  .nav-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Mobile Menu Button */
+  .mobile-menu-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+  }
+  
+  .mobile-menu-button:hover {
+    background: var(--color-frosted);
+  }
+  
+  .mobile-menu-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  .hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: var(--color-white);
+    border-radius: var(--radius-full);
+    transform-origin: center;
+  }
+  
+  .hamburger-line:not(:last-child) {
+    margin-bottom: 4px;
+  }
+  
+  /* Mobile Navigation */
+  .nav-mobile {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid var(--color-frosted-border);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .nav-mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .nav-mobile-link {
+    color: var(--color-gray-200);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-base);
+    text-decoration: none;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    display: block;
+  }
+  
+  .nav-mobile-link:hover {
+    color: var(--color-white);
+    background: var(--color-frosted);
+  }
+  
+  /* Mobile menu active state using CSS only */
+  .mobile-menu-checkbox:checked ~ .header-content .nav-mobile {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Desktop breakpoint */
+  @media (min-width: 1024px) {
+    .nav-desktop {
+      display: block;
+    }
+    
+    .mobile-menu-button {
+      display: none;
+    }
+    
+    .nav-mobile {
+      display: none;
+    }
+  }
+  
+  /* Header scroll effect */
+  /* Pure CSS mobile menu - zero JavaScript */
+  .mobile-menu-checkbox {
+    display: none;
+  }
+  
+  .mobile-menu-checkbox:checked ~ .header-content .nav-mobile {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .mobile-menu-checkbox:checked ~ .header-content .mobile-menu-button .hamburger-line:first-child {
+    transform: translateY(6px) rotate(45deg);
+  }
+  
+  .mobile-menu-checkbox:checked ~ .header-content .mobile-menu-button .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .mobile-menu-checkbox:checked ~ .header-content .mobile-menu-button .hamburger-line:last-child {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+</style>
+
+<!-- Zero JavaScript approach for maximum performance -->

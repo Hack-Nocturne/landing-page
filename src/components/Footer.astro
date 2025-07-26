@@ -1,0 +1,194 @@
+---
+import Gallery from '../components/Gallery.astro';
+
+const instagramIcon = '/icons/instagram.svg';
+const linkedinIcon = '/icons/linkedin.svg';
+const discordIcon = '/icons/discord.svg';
+const xIcon = '/icons/x.svg';
+// Footer component for Hack-Nocturne
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="footer-title">Venue</h3>
+        <div class="footer-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.1800455814255!2d77.60744237559472!3d13.151040487181028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae192ddf1ae00d%3A0xa150c6dea93315c!2sSir%20M.%20Visvesvaraya%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1753437949281!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style="border:0;aspect-ratio:16/9; border-radius: var(--radius-lg);"
+            allowfullscreen=""
+            loading="lazy"
+            title="Venue: Sir MVIT College Campus"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div class="address">
+          Sir M. Visvesvaraya Institute of Technology,
+          International Airport Road, Yelahanka,
+          Bengaluru, Karnataka 562157
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Past Event Highlights</h3>
+        <Gallery />
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-title">Our Socials</h3>
+        <div class="footer-socials">
+          <a href="https://twitter.com/_techhub" target="_blank" rel="noopener" class="footer-link">
+            <img src={xIcon} alt="Twitter Icon" class="footer-icon" loading="lazy" />
+            Twitter
+          </a>
+          <a href="https://instagram.com/techhub_community" target="_blank"
+            rel="noopener" class="footer-link">
+            <img src={instagramIcon} alt="Instagram Icon" class="footer-icon" loading="lazy" />
+            Instagram
+          </a>
+          <a href="https://discord.gg/techhub" target="_blank" rel="noopener" class="footer-link">
+            <img src={discordIcon} alt="Discord Icon" class="footer-icon" loading="lazy" />
+            Discord
+          </a>
+          <a href="https://www.linkedin.com/company/techhub-community" target="_blank" rel="noopener" class="footer-link">
+            <img src={linkedinIcon} alt="LinkedIn Icon" class="footer-icon" loading="lazy" />
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <span class="copyright">
+          © 2025 Hack-Nocturne. Organized by TechHub Community & Glug MVIT.
+        </span>
+        <div class="footer-links">
+          <a href="/privacy" class="footer-link">Privacy Policy</a>
+          <a href="/terms" class="footer-link">Terms of Service</a>
+          <a href="https://devfolio.co/code-of-conduct" target="_blank" rel="noopener" class="footer-link">
+            Code of Conduct
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Footer */
+  .footer {
+    background: var(--color-bg-secondary);
+    border-top: 2px solid var(--color-frosted-border);
+    padding: var(--space-8) 0 var(--space-8);
+    margin-top: var(--space-20);
+  }
+  
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    margin-bottom: var(--space-12);
+  }
+  
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-6);
+  }
+  
+  .footer-map {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-4);
+  }
+  
+  .address {
+    color: var(--color-gray-300);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .footer-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  
+  .footer-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: var(--space-2);
+    filter: invert(74%) sepia(80%) saturate(906%) hue-rotate(338deg) brightness(105%) contrast(103%);
+  }
+  
+  .footer-link {
+    display: flex;
+    align-items: center;
+    color: var(--color-accent);
+    font-size: var(--font-size-md);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    filter: grayscale(60%);
+  }
+
+  .footer-link:hover {
+    color: var(--color-white);
+    filter: grayscale(20%);
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid var(--color-frosted-border);
+    padding-top: var(--space-8);
+  }
+  
+  .footer-bottom-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+  
+  .copyright {
+    color: var(--color-gray-400);
+    font-size: var(--font-size-sm);
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: var(--space-6);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .footer-section:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .footer-bottom-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  /* Responsive Design - Tablet and larger screens */
+  @media (min-width: 640px) {
+    .footer-content {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .footer-bottom-content {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+</style>

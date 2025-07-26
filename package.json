@@ -1,16 +1,26 @@
 {
-  "name": "",
+  "name": "hack-nocturne-landing-page",
+  "description": "Hack-Nocturne '25 Official Landing Page - A premier hackathon by TechHub & Glug MVIT",
+  "author": "TechHub Community & Glug MVIT",
+  "version": "1.0.0",
   "type": "module",
-  "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --host",
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.11",
+    "@astrojs/sitemap": "^3.4.1",
     "astro": "^5.12.1",
-    "tailwindcss": "^4.1.11"
-  }
+    "lucide-astro": "^0.525.0"
+  },
+  "keywords": [
+    "hackathon",
+    "hack-nocturne",
+    "techhub",
+    "glug-mvit",
+    "bengaluru"
+  ]
 }

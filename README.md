@@ -1,47 +1,70 @@
-# Astro Starter Kit: Minimal
+# 🌟 Hack-Nocturne '25 Landing Page
 
-```sh
-pnpm create astro@latest -- --template minimal
+**Through the Night, Ideas Take Flight** ✨
+
+A premier 24-hour hackathon experience brought to you by TechHub Community & Glug MVIT, the technical clubs of Sir M. Visvesvaraya Institute Of Technology.
+
+## 🎯 Event Details
+
+- **📅 Date:** March 28-29, 2025
+- **📍 Venue:** Sir MVIT Campus, Bengaluru, India
+- **⏰ Duration:** 24 Hours
+- **🏆 Prize Pool:** $1,130+
+- **🎪 Track:** Open Track (Unlimited Creativity)
+
+## 🚀 Tech Stack
+
+- **Framework:** Astro 5.x (Static Site Generation)
+- **Language:** TypeScript
+- **Styling:** Pure CSS (No frameworks - Custom design system)
+- **Architecture:** Zero-JS approach for maximum performance
+- **Deployment:** Static site export ready (On Cloudflare Pages)
+
+## ⚡ Performance Features
+- **📱 Mobile-First Design:** Completely responsive
+- **♿ Accessibility:** WCAG 2.1 AA compliant
+- **🔍 SEO Optimized:** Rich meta tags, structured data, Open Graph
+- **⚡ Service Worker:** Offline-ready with caching strategy
+- **🖼️ Lazy Loading:** Optimized image loading
+- **🎨 Frosted Night Theme:** Modern dark UI with glassmorphism
+
+## 🛠️ Development
+
+### Prerequisites
+- Node.js 18+
+- pnpm (recommended)
+
+### Setup
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## 🎯 Deployment
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Static Export
+```bash
+# Build static site
+pnpm build
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+# Output directory: dist/
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 📄 License
+MIT License - Feel free to use this as a template for your own hackathon!
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+**Made with ❤️ for the developer community**
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+*Through the Night, Ideas Take Flight* 🚀
+> Rishabh Kumar - Signing off

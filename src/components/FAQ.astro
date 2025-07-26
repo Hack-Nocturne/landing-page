@@ -1,0 +1,242 @@
+---
+// FAQ Component with CSS-only accordion functionality
+const faqs = [
+  {
+    id: "faq-hnt-1",
+    question: "Who can participate?",
+    answer: "All undergrad students having valid College Id card are eligible to participate and cross-college teams are allowed (at least 2 participants of a team should be from one college)",
+  },
+  {
+    id: "faq-hnt-2",
+    question: "What's the team size?",
+    answer: "Teams can have 3 to 4 members.",
+  },
+  {
+    id: "faq-hnt-3",
+    question: "What is the participation cost?",
+    answer: "Participation in itself is free and you only have to pay ₹300 per member for accomodation and food, once you are accepted we'll email you the details to pay",
+  },
+  {
+    id: "faq-hnt-4",
+    question: "How do I register?",
+    answer: "Registrations can be completed online through Google Forms click on the 'Secure Your Spot Now' button at top.",
+  },
+  {
+    id: "faq-hnt-5",
+    question: "Will accommodation and food be provided?",
+    answer: "Yes, accommodation and food will be provided at the venue, it will be allotted once participant reaches the venue.",
+  },
+  {
+    id: "faq-hnt-6",
+    question: "When is the event?",
+    answer: "The event will be held from 28th of March 2025.",
+  },
+  {
+    id: "faq-hnt-7",
+    question: "What should I bring once selected for the hackathon?",
+    answer: "Bring your valid College Id, your laptop, charger, blanket (if you want to take a nap), medicine (if any), etc.",
+  },
+  {
+    id: "faq-hnt-8",
+    question: "Have further questions?",
+    answer: "Just fill the form in the contact section and we will get back to you.",
+  }
+];
+---
+
+<div class="faq-container">
+  {faqs.map((faq) => (
+    <div class="faq-item">
+      <input 
+        type="checkbox" 
+        id={faq.id} 
+        class="faq-toggle"
+        aria-describedby={`${faq.id}-answer`}
+      />
+      <label for={faq.id} class="faq-question" tabindex="0">
+        <span class="faq-question-text">{faq.question}</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path 
+              d="M5 7.5L10 12.5L15 7.5" 
+              stroke="currentColor" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </label>
+      <div class="faq-answer" id={`${faq.id}-answer`} role="region" aria-labelledby={faq.id}>
+        <div class="faq-answer-content">
+          <p>{faq.answer}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<div class="faq-contact">
+  <p>
+    Got more questions? Reach out to us at 
+    <a href="mailto:contact@hack-nocturne.in" class="contact-link">
+      contact@hack-nocturne.in
+    </a>
+  </p>
+</div>
+
+<style>
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .faq-item {
+    background: var(--color-frosted);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+  
+  .faq-item:hover {
+    border-color: var(--color-primary);
+  }
+  
+  .faq-toggle {
+    display: none;
+  }
+  
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-6);
+    cursor: pointer;
+    user-select: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    color: var(--color-white);
+  }
+  
+  .faq-question:hover {
+    background: rgba(124, 58, 237, 0.1);
+  }
+  
+  .faq-question:focus-visible {
+    outline: none;
+    background: rgba(124, 58, 237, 0.15);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+  }
+  
+  .faq-question-text {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-snug);
+    color: var(--color-white);
+    flex: 1;
+    margin-right: var(--space-4);
+  }
+  
+  .faq-icon {
+    color: var(--color-primary);
+    transition: transform var(--transition-base);
+    flex-shrink: 0;
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-slow);
+  }
+  
+  .faq-answer-content {
+    padding: 0 var(--space-6) var(--space-6);
+    border-top: 1px solid var(--color-frosted-border);
+  }
+  
+  .faq-answer-content p {
+    color: var(--color-gray-200);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    margin: var(--space-4) 0 0;
+  }
+  
+  /* Active state */
+  .faq-toggle:checked + .faq-question .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-toggle:checked + .faq-question {
+    background: rgba(124, 58, 237, 0.1);
+  }
+  
+  .faq-toggle:checked ~ .faq-answer {
+    max-height: 500px; /* Adjust based on content */
+  }
+  
+  .faq-contact {
+    text-align: center;
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    max-width: 800px;
+    margin: 2rem auto;
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-xl);
+  }
+  
+  .faq-contact p {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-200);
+    margin: 0;
+  }
+  
+  .contact-link {
+    color: #c084fc; /* Improved contrast light purple */
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  
+  .contact-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+  }
+  
+  .contact-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+  
+  @media (min-width: 640px) {
+    .faq-question-text {
+      font-size: var(--font-size-xl);
+    }
+  }
+</style>
+
+<script>
+  // Enhanced accessibility for keyboard navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqLabels = document.querySelectorAll('.faq-question');
+    
+    faqLabels.forEach(label => {
+      label.addEventListener('keydown', (e) => {
+        const keyEvent = e as KeyboardEvent;
+        if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+          keyEvent.preventDefault();
+          const checkbox = document.getElementById(label.getAttribute('for')!) as HTMLInputElement;
+          if (checkbox) {
+            checkbox.checked = !checkbox.checked;
+          }
+        }
+      });
+    });
+  });
+</script>

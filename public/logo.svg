@@ -1,0 +1,25 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hack-Nocturne Logo inspired by the attached logo -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5b21b6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer diamond shape -->
+  <path d="M50 10 L80 25 L85 50 L80 75 L50 90 L20 75 L15 50 L20 25 Z" fill="url(#grad1)" opacity="0.8"/>
+  
+  <!-- Inner geometric pattern -->
+  <path d="M50 20 L70 30 L75 50 L70 70 L50 80 L30 70 L25 50 L30 30 Z" fill="#1a1a3a" opacity="0.9"/>
+  
+  <!-- Central H shape -->
+  <path d="M35 35 L35 65 L42 65 L42 52 L58 52 L58 65 L65 65 L65 35 L58 35 L58 45 L42 45 L42 35 Z" fill="#7c3aed"/>
+  
+  <!-- Accent dots -->
+  <circle cx="30" cy="30" r="2" fill="#fbbf24"/>
+  <circle cx="70" cy="30" r="2" fill="#fbbf24"/>
+  <circle cx="30" cy="70" r="2" fill="#fbbf24"/>
+  <circle cx="70" cy="70" r="2" fill="#fbbf24"/>
+</svg>

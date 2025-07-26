@@ -1,0 +1,242 @@
+---
+interface PrizeData {
+  icon: string;
+  title: string;
+  amount: string;
+  winner: string | null;
+  color: string;
+}
+
+const prizes: PrizeData[] = [
+  {
+    icon: "🏆",
+    title: "Winner",
+    amount: "₹25,000",
+    winner: "Losers",
+    color: "#FFD700"
+  },
+  {
+    icon: "🥈", 
+    title: "Runner Up",
+    amount: "₹15,000",
+    winner: "CodeWin",
+    color: "#C0C0C0"
+  },
+  {
+    icon: "🥉",
+    title: "Second Runner Up", 
+    amount: "₹10,000",
+    winner: "CodeX",
+    color: "#CD7F32"
+  }
+];
+---
+
+<div class="prizes-container">
+  {prizes.map((prize) => (
+    <div class="prize-card" style={`--prize-color: ${prize.color}`}>
+      <div class="prize-header">
+        <div class="prize-icon">{prize.icon}</div>
+        <div class="prize-content">
+          <h3 class="prize-title">{prize.title}</h3>
+          <div class="prize-amount">{prize.amount}</div>
+          {prize.winner ? (
+            <div class="prize-winner">
+              <span class="winner-name">Goes To :&nbsp;<b>{prize.winner}</b></span>
+            </div>
+          ) : (
+            <div class="prize-tba">
+              <span class="tba-text">Winner TBA</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .prizes-container {
+    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .prize-card {
+    background: var(--color-frosted);
+    border: 2px solid var(--prize-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    flex: 1;
+    min-width: 300px;
+    max-width: 100%;
+    box-shadow:
+      var(--shadow-sm),
+      0 0 20px rgba(var(--prize-color-rgb), 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .prize-card {
+      max-width: 300px;
+    }
+  }
+
+  .prize-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(var(--prize-color-rgb), 0.1) 0%,
+      transparent 50%,
+      rgba(var(--prize-color-rgb), 0.05) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .prize-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+      var(--shadow-lg),
+      0 0 30px rgba(var(--prize-color-rgb), 0.4),
+      0 0 60px rgba(var(--prize-color-rgb), 0.2);
+    border-color: var(--prize-color);
+  }
+
+  .prize-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .prize-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .prize-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .prize-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--prize-color);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(var(--prize-color-rgb), 0.3);
+  }
+
+  .prize-amount {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #FFD700;
+    margin-bottom: 0.75rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
+  }
+
+  .prize-winner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .winner-label {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .winner-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    padding: 0.75rem;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-base);
+    border: 1px solid var(--color-frosted-border);
+    text-align: center;
+    width: 100%;
+  }
+
+  .prize-tba {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.25rem;
+  }
+
+  .tba-text {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding: 0.75rem;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-base);
+    border: 1px dashed var(--color-frosted-border);
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 639px) {
+    .prize-header {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.75rem;
+    }
+    
+    .prize-icon {
+      font-size: 3rem;
+    }
+    
+    .prize-title {
+      font-size: 1.375rem;
+    }
+    
+    .prize-amount {
+      font-size: 1.75rem;
+    }
+  }
+
+  /* Performance optimizations */
+  .prize-card {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    --prize-color-rgb: 255, 215, 0; /* Default gold color in RGB */
+  }
+
+  /* Dynamic color variables for each card */
+  .prize-card[style*="--prize-color: #FFD700"] {
+    --prize-color-rgb: 255, 215, 0; /* Gold */
+  }
+  
+  .prize-card[style*="--prize-color: #C0C0C0"] {
+    --prize-color-rgb: 192, 192, 192; /* Silver */
+  }
+  
+  .prize-card[style*="--prize-color: #CD7F32"] {
+    --prize-color-rgb: 205, 127, 50; /* Bronze */
+  }
+
+  .prize-card:hover {
+    will-change: auto;
+  }
+</style>

@@ -1,0 +1,455 @@
+---
+// Sponsors Component with tiered layout
+
+interface Sponsor {
+  name: string;
+  logo: string;
+  website: string;
+  description: string;
+}
+
+interface TierInfo {
+  title: string;
+  color: string;
+}
+
+const sponsors: Record<string, Sponsor[]> = {
+  gold: [
+    {
+      name: "Concurrence AI",
+      logo: "/images/sponsors/concurrence.webp",
+      website: "https://concurrence.ai/",
+      description: "Build Safer Communities with AI Chat Moderation"
+    },
+    {
+      name: "Zintlr",
+      logo: "/images/sponsors/zintlr.webp", 
+      website: "https://zintlr.com/",
+      description: "Access Data That Converts - Identify and reach your ideal customers using the largest and most accurate contact database of 250M+ business profiles."
+    }
+  ],
+  silver: [
+    {
+      name: "Polygon",
+      logo: "/images/sponsors/polygon.webp",
+      website: "https://polygon.technology/",
+      description: "Polygon is the fast, low-cost blockchain powering real-world assets and global payments, used by millions every day."
+    },
+    {
+      name: "ETHIndia",
+      logo: "/images/sponsors/ethindia.webp",
+      website: "https://ethindia.co/",
+      description: "Largest ethereum community"
+    },
+    {
+      name: "Devfolio",
+      logo: "/images/sponsors/devfolio.webp",
+      website: "https://devfolio.co/",
+      description: "Devfolio for communities. No more creating Google Forms and managing participants in an Excel sheet. You focus on your people, leave the rest to us."
+    },
+    {
+      name: "Tvara",
+      logo: "/images/sponsors/tvara.webp",
+      website: "https://tvara.org/",
+      description: "Tvara delivers AI solutions for manufacturing, real estate, and design-and-build, empowering your enterprise to scale with generative AI."
+    }
+  ],
+  bronze: [
+    {
+      name: "theDevArmy",
+      logo: "/images/sponsors/thedevarmy.webp",
+      website: "https://thedevarmy.com/",
+      description: "Developer community"
+    },
+    {
+      name: "Appwrite",
+      logo: "/images/sponsors/appwrite.webp",
+      website: "https://appwrite.io/",
+      description: "Open-source, all-in-one development platform. Use built-in backend infrastructure and web hosting, all from a single place."
+    },
+    {
+      name: "InterviewBuddy",
+      logo: "/images/sponsors/interviewbuddy.webp",
+      website: "https://interviewbuddy.net/",
+      description: "Master the art of interviewing with AI-powered mock sessions, expert feedback and personalized coaching that gets you hired at top companies"
+    },
+    {
+      name: "NetCredential",
+      logo: "/images/sponsors/netcredential.webp",
+      website: "https://netcredential.com/",
+      description: "A Complete Digital Credential Platform"
+    },
+    {
+      name: "EndlessDomains",
+      logo: "/images/sponsors/endlessdomains.webp",
+      website: "https://endlessdomains.io/",
+      description: "Web3 Domains in one place."
+    }
+  ],
+  platform: [
+    {
+      name: "0xDay",
+      logo: "/images/sponsors/0xday.webp",
+      website: "https://0x.day/",
+      description: "HACK high-impact hackathons across the deep tech"
+    }
+  ],
+  domain: [
+    {
+      name: ".xyz",
+      logo: "/images/sponsors/xyz.webp",
+      website: "https://gen.xyz/",
+      description: "Domain provider - For every website, everywhere"
+    }
+  ]
+};
+
+const tierInfo: Record<string, TierInfo> = {
+  gold: { title: "Gold Sponsors", color: "#fbbf24" },
+  silver: { title: "Silver Sponsors", color: "#f3f4f6" },
+  bronze: { title: "Bronze Sponsors", color: "#f59e0b" },
+  platform: { title: "Platform Partner", color: "#c084fc" },
+  domain: { title: "Domain Partner", color: "#7c3aed" }
+};
+---
+
+<div class="sponsors-container">
+  {Object.entries(sponsors).map(([tier, sponsorList]) => (
+    <div class="sponsor-tier">
+      <h3 class="tier-title" style={`color: ${tierInfo[tier].color}`}>
+        {tierInfo[tier].title}
+      </h3>
+      
+      <div class={`sponsor-grid sponsor-grid-${tier}`}>
+        {sponsorList.map((sponsor) => (
+          <div class="sponsor-card-minimal">
+            <a 
+              href={sponsor.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="sponsor-link"
+              aria-label={`Visit ${sponsor.name} website`}
+            >
+              <div class="sponsor-logo-minimal">
+                <img 
+                  src={sponsor.logo}
+                  alt={`${sponsor.name} logo`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              
+              <!-- CSS-only popover -->
+              <div class="sponsor-popover">
+                <div class="popover-content">
+                  <h4 class="popover-name">{sponsor.name}</h4>
+                  <p class="popover-description">{sponsor.description}</p>
+                  <div class="popover-website">{new URL(sponsor.website).hostname}</div>
+                  <div class="popover-arrow"></div>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .sponsors-container {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-12);
+  }
+  
+  .sponsor-btn {
+    font-size: var(--font-size-lg);
+    padding: var(--space-4) var(--space-8);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .sponsor-tier {
+    text-align: center;
+  }
+  
+  .tier-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-8);
+  }
+  
+  .sponsor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+  }
+  
+  .sponsor-grid-gold {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .sponsor-grid-gold .sponsor-card-minimal {
+    flex: 1 1 calc(50% - var(--space-2));
+    min-width: 240px;
+    max-width: 380px;
+  }
+  
+  .sponsor-grid-silver {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .sponsor-grid-silver .sponsor-card-minimal {
+    flex: 1 1 calc(33.333% - var(--space-3));
+    min-width: 220px;
+    max-width: 280px;
+  }
+  
+  .sponsor-grid-bronze {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .sponsor-grid-bronze .sponsor-card-minimal {
+    flex: 1 1 calc(25% - var(--space-3));
+    min-width: 200px;
+    max-width: 240px;
+  }
+  
+  .sponsor-grid-platform,
+  .sponsor-grid-domain {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .sponsor-grid-platform .sponsor-card-minimal,
+  .sponsor-grid-domain .sponsor-card-minimal {
+    flex: 1 1 calc(100% - var(--space-2));
+    min-width: 200px;
+    max-width: 400px;
+  }
+  
+  /* Minimal Sponsor Cards */
+  .sponsor-card-minimal {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-width: 0; /* Allow shrinking */
+  }
+  
+  .sponsor-link {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    text-decoration: none;
+  }
+  
+  .sponsor-logo-minimal {
+    background: var(--color-gray-200);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3/1;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100px;
+    box-sizing: border-box;
+  }
+  
+  .sponsor-logo-minimal:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .sponsor-logo-minimal img {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: brightness(0.9);
+    transition: filter var(--transition-fast);
+  }
+  
+  .sponsor-link:hover .sponsor-logo-minimal img {
+    filter: brightness(1.1);
+  }
+  
+  /* Popover Styles */
+  .sponsor-popover {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    margin-top: var(--space-2);
+  }
+  
+  .sponsor-link:hover .sponsor-popover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .popover-content {
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    min-width: 200px;
+    max-width: 280px;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .popover-arrow {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: rgba(15, 15, 35, 0.95);
+    border: 1px solid var(--color-frosted-border);
+    border-bottom: none;
+    border-right: none;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  
+  .popover-name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-tight);
+  }
+  
+  .popover-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-300);
+    margin-bottom: var(--space-3);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .popover-website {
+    font-size: var(--font-size-xs);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-1) var(--space-2);
+    background: rgba(139, 69, 255, 0.1);
+    border: 1px solid rgba(139, 69, 255, 0.3);
+    border-radius: var(--radius-md);
+    display: inline-block;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .sponsor-cta {
+      padding: var(--space-8);
+      margin-bottom: var(--space-6);
+    }
+    
+    .cta-title {
+      font-size: var(--font-size-2xl);
+    }
+    
+    .cta-description {
+      font-size: var(--font-size-base);
+    }
+    
+    .sponsor-btn {
+      font-size: var(--font-size-base);
+      padding: var(--space-3) var(--space-6);
+    }
+    
+    .sponsor-grid-gold .sponsor-card-minimal,
+    .sponsor-grid-silver .sponsor-card-minimal,
+    .sponsor-grid-bronze .sponsor-card-minimal,
+    .sponsor-grid-platform .sponsor-card-minimal,
+    .sponsor-grid-domain .sponsor-card-minimal {
+      flex: 1 1 calc(50% - var(--space-2));
+      min-width: 140px;
+      max-width: none;
+    }
+    
+    .sponsor-grid {
+      gap: var(--space-3);
+    }
+    
+    .sponsor-logo-minimal {
+      aspect-ratio: 2.5/1;
+      padding: var(--space-3);
+      height: 60px;
+      min-height: 60px;
+      max-height: 60px;
+    }
+    
+    .popover-content {
+      min-width: 180px;
+      max-width: 220px;
+    }
+    
+    .tier-title {
+      font-size: var(--font-size-xl);
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .sponsor-grid-gold .sponsor-card-minimal {
+      flex: 1 1 calc(50% - var(--space-2));
+      min-width: 240px;
+    }
+    
+    .sponsor-grid-silver .sponsor-card-minimal {
+      flex: 1 1 calc(33.333% - var(--space-3));
+      min-width: 200px;
+    }
+    
+    .sponsor-grid-bronze .sponsor-card-minimal {
+      flex: 1 1 calc(33.333% - var(--space-3));
+      min-width: 180px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .sponsors-container {
+      gap: var(--space-16);
+    }
+    
+    .sponsor-grid-bronze .sponsor-card-minimal {
+      flex: 1 1 calc(25% - var(--space-3));
+      min-width: 200px;
+    }
+    
+    .tier-title {
+      font-size: var(--font-size-3xl);
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .sponsor-grid-bronze .sponsor-card-minimal {
+      flex: 1 1 calc(20% - var(--space-3));
+      min-width: 180px;
+    }
+  }
+</style>
