@@ -113,24 +113,24 @@ const tierInfo: Record<string, TierInfo> = {
 };
 ---
 
-<div class="sponsors-container">
+<div class="spnsr-container">
   {Object.entries(sponsors).map(([tier, sponsorList]) => (
-    <div class="sponsor-tier">
+    <div class="spnsr-tier">
       <h3 class="tier-title" style={`color: ${tierInfo[tier].color}`}>
         {tierInfo[tier].title}
       </h3>
       
-      <div class={`sponsor-grid sponsor-grid-${tier}`}>
+      <div class={`spnsr-grid spnsr-grid-${tier}`}>
         {sponsorList.map((sponsor) => (
-          <div class="sponsor-card-minimal">
+          <div class="spnsr-card-minimal">
             <a 
               href={sponsor.website}
               target="_blank"
               rel="noopener noreferrer"
-              class="sponsor-link"
+              class="spnsr-link"
               aria-label={`Visit ${sponsor.name} website`}
             >
-              <div class="sponsor-logo-minimal">
+              <div class="spnsr-logo-minimal">
                 <img 
                   src={sponsor.logo}
                   alt={`${sponsor.name} logo`}
@@ -140,7 +140,7 @@ const tierInfo: Record<string, TierInfo> = {
               </div>
               
               <!-- CSS-only popover -->
-              <div class="sponsor-popover">
+              <div class="spnsr-popover">
                 <div class="popover-content">
                   <h4 class="popover-name">{sponsor.name}</h4>
                   <p class="popover-description">{sponsor.description}</p>
@@ -157,7 +157,7 @@ const tierInfo: Record<string, TierInfo> = {
 </div>
 
 <style>
-  .sponsors-container {
+  .spnsr-container {
     max-width: 680px;
     margin: 0 auto;
     display: flex;
@@ -166,14 +166,14 @@ const tierInfo: Record<string, TierInfo> = {
     gap: var(--space-12);
   }
   
-  .sponsor-btn {
+  .spnsr-btn {
     font-size: var(--font-size-lg);
     padding: var(--space-4) var(--space-8);
     position: relative;
     z-index: 1;
   }
   
-  .sponsor-tier {
+  .spnsr-tier {
     text-align: center;
   }
   
@@ -183,7 +183,7 @@ const tierInfo: Record<string, TierInfo> = {
     margin-bottom: var(--space-8);
   }
   
-  .sponsor-grid {
+  .spnsr-grid {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-4);
@@ -192,63 +192,62 @@ const tierInfo: Record<string, TierInfo> = {
     width: 100%;
   }
   
-  .sponsor-grid-gold {
+  .spnsr-grid-gold {
     max-width: 800px;
     margin: 0 auto;
   }
   
-  .sponsor-grid-gold .sponsor-card-minimal {
+  .spnsr-grid-gold .spnsr-card-minimal {
     flex: 1 1 calc(50% - var(--space-2));
     min-width: 240px;
     max-width: 380px;
   }
   
-  .sponsor-grid-silver {
+  .spnsr-grid-silver {
     max-width: 900px;
     margin: 0 auto;
   }
   
-  .sponsor-grid-silver .sponsor-card-minimal {
+  .spnsr-grid-silver .spnsr-card-minimal {
     flex: 1 1 calc(33.333% - var(--space-3));
     min-width: 220px;
     max-width: 280px;
   }
   
-  .sponsor-grid-bronze {
+  .spnsr-grid-bronze {
     max-width: 1000px;
     margin: 0 auto;
   }
   
-  .sponsor-grid-bronze .sponsor-card-minimal {
+  .spnsr-grid-bronze .spnsr-card-minimal {
     flex: 1 1 calc(25% - var(--space-3));
     min-width: 200px;
     max-width: 240px;
   }
   
-  .sponsor-grid-platform,
-  .sponsor-grid-domain {
+  .spnsr-grid-platform,
+  .spnsr-grid-domain {
     max-width: 600px;
     margin: 0 auto;
   }
   
-  .sponsor-grid-platform .sponsor-card-minimal,
-  .sponsor-grid-domain .sponsor-card-minimal {
+  .spnsr-grid-platform .spnsr-card-minimal,
+  .spnsr-grid-domain .spnsr-card-minimal {
     flex: 1 1 calc(100% - var(--space-2));
     min-width: 200px;
     max-width: 400px;
   }
   
   /* Minimal Sponsor Cards */
-  .sponsor-card-minimal {
+  .spnsr-card-minimal {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-width: 0; /* Allow shrinking */
   }
   
-  .sponsor-link {
+  .spnsr-link {
     position: relative;
     display: block;
     width: 100%;
@@ -256,7 +255,7 @@ const tierInfo: Record<string, TierInfo> = {
     text-decoration: none;
   }
   
-  .sponsor-logo-minimal {
+  .spnsr-logo-minimal {
     background: var(--color-gray-200);
     border: 1px solid var(--color-frosted-border);
     border-radius: var(--radius-lg);
@@ -271,13 +270,13 @@ const tierInfo: Record<string, TierInfo> = {
     box-sizing: border-box;
   }
   
-  .sponsor-logo-minimal:hover {
+  .spnsr-logo-minimal:hover {
     border-color: var(--color-primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
   }
   
-  .sponsor-logo-minimal img {
+  .spnsr-logo-minimal img {
     width: 100%;
     height: 100%;
     max-height: 100%;
@@ -287,12 +286,12 @@ const tierInfo: Record<string, TierInfo> = {
     transition: filter var(--transition-fast);
   }
   
-  .sponsor-link:hover .sponsor-logo-minimal img {
+  .spnsr-link:hover .spnsr-logo-minimal img {
     filter: brightness(1.1);
   }
   
   /* Popover Styles */
-  .sponsor-popover {
+  .spnsr-popover {
     position: absolute;
     top: 100%;
     left: 50%;
@@ -304,7 +303,7 @@ const tierInfo: Record<string, TierInfo> = {
     margin-top: var(--space-2);
   }
   
-  .sponsor-link:hover .sponsor-popover {
+  .spnsr-link:hover .spnsr-popover {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
@@ -364,7 +363,7 @@ const tierInfo: Record<string, TierInfo> = {
   
   /* Responsive adjustments */
   @media (max-width: 640px) {
-    .sponsor-cta {
+    .spnsr-cta {
       padding: var(--space-8);
       margin-bottom: var(--space-6);
     }
@@ -377,26 +376,26 @@ const tierInfo: Record<string, TierInfo> = {
       font-size: var(--font-size-base);
     }
     
-    .sponsor-btn {
+    .spnsr-btn {
       font-size: var(--font-size-base);
       padding: var(--space-3) var(--space-6);
     }
     
-    .sponsor-grid-gold .sponsor-card-minimal,
-    .sponsor-grid-silver .sponsor-card-minimal,
-    .sponsor-grid-bronze .sponsor-card-minimal,
-    .sponsor-grid-platform .sponsor-card-minimal,
-    .sponsor-grid-domain .sponsor-card-minimal {
+    .spnsr-grid-gold .spnsr-card-minimal,
+    .spnsr-grid-silver .spnsr-card-minimal,
+    .spnsr-grid-bronze .spnsr-card-minimal,
+    .spnsr-grid-platform .spnsr-card-minimal,
+    .spnsr-grid-domain .spnsr-card-minimal {
       flex: 1 1 calc(50% - var(--space-2));
       min-width: 140px;
       max-width: none;
     }
     
-    .sponsor-grid {
+    .spnsr-grid {
       gap: var(--space-3);
     }
     
-    .sponsor-logo-minimal {
+    .spnsr-logo-minimal {
       aspect-ratio: 2.5/1;
       padding: var(--space-3);
       height: 60px;
@@ -415,28 +414,28 @@ const tierInfo: Record<string, TierInfo> = {
   }
   
   @media (min-width: 768px) {
-    .sponsor-grid-gold .sponsor-card-minimal {
+    .spnsr-grid-gold .spnsr-card-minimal {
       flex: 1 1 calc(50% - var(--space-2));
       min-width: 240px;
     }
     
-    .sponsor-grid-silver .sponsor-card-minimal {
+    .spnsr-grid-silver .spnsr-card-minimal {
       flex: 1 1 calc(33.333% - var(--space-3));
       min-width: 200px;
     }
     
-    .sponsor-grid-bronze .sponsor-card-minimal {
+    .spnsr-grid-bronze .spnsr-card-minimal {
       flex: 1 1 calc(33.333% - var(--space-3));
       min-width: 180px;
     }
   }
   
   @media (min-width: 1024px) {
-    .sponsors-container {
+    .spnsr-container {
       gap: var(--space-16);
     }
     
-    .sponsor-grid-bronze .sponsor-card-minimal {
+    .spnsr-grid-bronze .spnsr-card-minimal {
       flex: 1 1 calc(25% - var(--space-3));
       min-width: 200px;
     }
@@ -447,7 +446,7 @@ const tierInfo: Record<string, TierInfo> = {
   }
   
   @media (min-width: 1200px) {
-    .sponsor-grid-bronze .sponsor-card-minimal {
+    .spnsr-grid-bronze .spnsr-card-minimal {
       flex: 1 1 calc(20% - var(--space-3));
       min-width: 180px;
     }
