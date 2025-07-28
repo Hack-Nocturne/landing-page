@@ -1,4 +1,5 @@
 ---
+// https://search.google.com/test/rich-results
 import '../styles/reset.css';
 import '../styles/global.css';
 
@@ -92,6 +93,10 @@ const socialImage = image ? new URL(image, Astro.url).href : new URL('/cover.web
             "longitude": "77.6158"
           }
         },
+        "performer": {
+          "@type": "Organization",
+          "name": "TechHub Community & Glug MVIT"
+        },
         "organizer": [
           {
             "@type": "Organization",
@@ -109,7 +114,9 @@ const socialImage = image ? new URL(image, Astro.url).href : new URL('/cover.web
           "price": "0",
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
-          "url": "https://hack-nocturne.devfolio.co/"
+          "url": "https://hack-nocturne.devfolio.co/",
+          "validFrom": "2025-03-28T00:00:00+05:30",
+          "validThrough": "2025-03-30T18:00:00+05:30"
         },
         "image": "https://hack-nocturne.in/cover.webp",
         "url": "https://hack-nocturne.in"
