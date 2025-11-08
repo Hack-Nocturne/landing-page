@@ -3,25 +3,110 @@
 ---
 
 <div class="countdown-container">
-  <div class="countdown-title" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Time Left</div>
-  <div class="countdown-message" style="display: block;">
-    <span class="event-ended" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Event Ended</span>
+  <div
+    class="countdown-title"
+    style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;"
+  >
+    Time Left
   </div>
+
+  <div class="countdown" role="timer" aria-live="polite" aria-atomic="true">
+    <div class="countdown-item">
+      <span id="cd-days" class="countdown-number">0</span>
+      <span class="countdown-label">Days</span>
+    </div>
+    <div class="countdown-item">
+      <span id="cd-hours" class="countdown-number">0</span>
+      <span class="countdown-label">Hours</span>
+    </div>
+    <div class="countdown-item">
+      <span id="cd-mins" class="countdown-number">0</span>
+      <span class="countdown-label">Minutes</span>
+    </div>
+    <div class="countdown-item">
+      <span id="cd-secs" class="countdown-number">0</span>
+      <span class="countdown-label">Seconds</span>
+    </div>
+  </div>
+
+  <!--
+  <div class="countdown-message">
+    <span
+      class="event-ended"
+      style="display:none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;"
+      >Event Ended</span
+    >
+  </div>
+  -->
 </div>
+
+<script type="module">
+  // Target date: 6 March 2026 at 00:00:00 UTC
+  const target = new Date("2026-03-06T00:00:00Z").getTime();
+
+  const elDays = document.getElementById("cd-days");
+  const elHours = document.getElementById("cd-hours");
+  const elMins = document.getElementById("cd-mins");
+  const elSecs = document.getElementById("cd-secs");
+  const elEnded = document.querySelector(".event-ended");
+  const elGrid = document.querySelector(".countdown");
+
+  function pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function update() {
+    const now = Date.now();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      // Event ended
+      if (elGrid) elGrid.style.display = "none";
+      if (elEnded) elEnded.style.display = "block";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    if (elDays) elDays.textContent = String(days);
+    if (elHours) elHours.textContent = pad(hours);
+    if (elMins) elMins.textContent = pad(minutes);
+    if (elSecs) elSecs.textContent = pad(seconds);
+  }
+
+  // Update every second
+  update();
+  const timer = setInterval(update, 1000);
+
+  // Keep accurate after tab visibility changes
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      update();
+    }
+  });
+
+  // Clean up if Astro unmounts the island (defensive)
+  if (import.meta && import.meta.hot) {
+    import.meta.hot.dispose(() => clearInterval(timer));
+  }
+</script>
 
 <style>
   .countdown-container {
     text-align: center;
     margin-top: var(--space-8);
   }
-  
+
   .countdown-title {
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-semibold);
     color: var(--color-white);
     margin-bottom: var(--space-6);
   }
-  
+
   .countdown {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -29,7 +114,7 @@
     max-width: 400px;
     margin: 0 auto;
   }
-  
+
   .countdown-item {
     background: var(--color-frosted);
     border: 1px solid var(--color-frosted-border);
@@ -37,12 +122,12 @@
     padding: var(--space-4);
     text-align: center;
   }
-  
+
   .countdown-item:hover {
     transform: translateY(-2px);
     border-color: var(--color-primary);
   }
-  
+
   .countdown-number {
     display: block;
     font-size: var(--font-size-2xl);
@@ -51,7 +136,7 @@
     line-height: var(--line-height-tight);
     margin-bottom: var(--space-1);
   }
-  
+
   .countdown-label {
     display: block;
     font-size: var(--font-size-xs);
@@ -60,7 +145,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  
+
   .countdown-message {
     background: var(--color-frosted);
     border: 1px solid var(--color-frosted-border);
@@ -69,24 +154,24 @@
     max-width: 400px;
     margin: 0 auto;
   }
-  
+
   .event-ended {
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
     color: var(--color-accent);
     text-shadow: var(--shadow-glow-accent);
   }
-  
+
   @media (min-width: 640px) {
     .countdown {
       gap: var(--space-6);
       max-width: 500px;
     }
-    
+
     .countdown-number {
       font-size: var(--font-size-3xl);
     }
-    
+
     .countdown-label {
       font-size: var(--font-size-sm);
     }
