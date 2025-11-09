@@ -109,10 +109,13 @@
 
   .countdown {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* keep 4 columns but ensure cells can shrink to avoid overflow */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-4);
     max-width: 400px;
     margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
   }
 
   .countdown-item {
@@ -174,6 +177,32 @@
 
     .countdown-label {
       font-size: var(--font-size-sm);
+    }
+  }
+
+  /* Reduce sizes while keeping 4 columns on narrow screens (e.g. 375px) */
+  @media (max-width: 480px) {
+    .countdown {
+      /* keep 4 columns but allow content to be tighter */
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.4rem;
+      padding: 0 0.375rem;
+      max-width: 100%;
+    }
+
+    .countdown-item {
+      padding: 0.35rem 0.45rem;
+    }
+
+    .countdown-number {
+      /* slightly smaller numeric size to prevent wrapping/overflow */
+      font-size: 1.05rem; /* roughly small-medium */
+      margin-bottom: 0.15rem;
+    }
+
+    .countdown-label {
+      font-size: 0.625rem; /* smaller labels */
+      letter-spacing: 0.03em;
     }
   }
 </style>
