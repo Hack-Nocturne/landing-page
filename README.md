@@ -1,4 +1,4 @@
-# 🌟 Hack-Nocturne '25 Landing Page
+# 🌟 Hack-Nocturne '26 Landing Page
 
 **Through the Night, Ideas Take Flight** ✨
 
@@ -6,7 +6,7 @@ A premier 24-hour hackathon experience brought to you by TechHub Community & Glu
 
 ## 🎯 Event Details
 
-- **📅 Date:** March 28-29, 2025
+- **📅 Date:** March 06-07, 2026
 - **📍 Venue:** Sir MVIT Campus, Bengaluru, India
 - **⏰ Duration:** 24 Hours
 - **🏆 Prize Pool:** $1,130+

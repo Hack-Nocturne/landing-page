@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="404 - Page Not Found | Hack-Nocturne '26"
+  description="The page you're looking for doesn't exist. Return to Hack-Nocturne homepage."
+>
+  <main class="error-page">
+    <div class="error-container">
+      <div class="error-content">
+        <div class="error-code">404</div>
+        
+        <div class="error-message">
+          <h1 class="error-title">Lost in the Night?</h1>
+          <p class="error-description">
+            The page you're looking for doesn't exist.
+          </p>
+        </div>
+        
+        <div class="error-actions">
+          <a href="/" class="home-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Back to Home</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .error-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-primary);
+    padding: var(--space-8);
+  }
+  
+  .error-container {
+    max-width: 600px;
+    width: 100%;
+  }
+  
+  .error-content {
+    text-align: center;
+  }
+  
+  .error-code {
+    font-size: clamp(8rem, 20vw, 14rem);
+    font-weight: var(--font-weight-black);
+    line-height: 1;
+    margin-bottom: var(--space-6);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .error-message {
+    margin-bottom: var(--space-10);
+  }
+  
+  .error-title {
+    font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+    line-height: var(--line-height-tight);
+  }
+  
+  .error-description {
+    font-size: clamp(var(--font-size-md), 2.5vw, var(--font-size-lg));
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .error-actions {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .home-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-8);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: var(--color-white);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-base);
+    box-shadow: 0 4px 20px rgba(139, 69, 255, 0.3);
+  }
+  
+  .home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(139, 69, 255, 0.5);
+  }
+  
+  .home-button:active {
+    transform: translateY(0);
+  }
+  
+  .home-button svg {
+    transition: transform var(--transition-fast);
+  }
+  
+  .home-button:hover svg {
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    .error-page {
+      padding: var(--space-6);
+    }
+    
+    .error-code {
+      font-size: 6rem;
+      margin-bottom: var(--space-4);
+    }
+    
+    .error-title {
+      font-size: var(--font-size-2xl);
+    }
+    
+    .error-description {
+      font-size: var(--font-size-md);
+    }
+    
+    .home-button {
+      padding: var(--space-3) var(--space-6);
+      font-size: var(--font-size-md);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .home-button:hover {
+      transform: none;
+    }
+  }
+</style>
+
