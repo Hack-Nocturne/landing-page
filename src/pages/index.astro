@@ -45,6 +45,11 @@ const description =
         </p>
 
         <div class="hero-buttons">
+          <div
+            class="apply-button"
+            data-button-theme="dark"
+            data-hackathon-slug="hack-nocturne-2"
+          ></div>
           <div class="button-group">
             <a
               href="/assets/sponsors-brochure-26.pdf"
@@ -61,16 +66,6 @@ const description =
               rel="noopener"
             >
               📜 Rules
-            </a>
-          </div>
-          <div class="button-group mt-4">
-            <a
-              href="https://hack-nocturne.devfolio.co/"
-              class="btn btn-primary btn-lg"
-              target="_blank"
-              rel="noopener"
-            >
-              🚀 Apply with Devfolio
             </a>
           </div>
         </div>
@@ -323,6 +318,7 @@ const description =
   </main>
 
   <Footer />
+  <script is:inline async src="/scripts/devfolio-sdk.js"></script>
 </Layout>
 
 <style>
