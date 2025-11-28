@@ -1,72 +1,80 @@
 ---
-// Contact Form - Zero JS form handling with native form submission
+// Contact Form Component
 ---
 
 <form class="contact-form" action="#" method="POST" id="contact-form">
-  <div class="form-group">
-    <label for="name" class="form-label">Name *</label>
-    <input 
-      type="text" 
-      id="name" 
-      name="name" 
-      class="form-input" 
-      required 
-      placeholder="Your full name"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="email" class="form-label">Email *</label>
-    <input 
-      type="email" 
-      id="email" 
-      name="email" 
-      class="form-input" 
-      required 
-      placeholder="your.email@example.com"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="phone" class="form-label">Phone</label>
-    <input 
-      type="tel" 
-      id="phone" 
-      name="phone" 
-      class="form-input" 
-      placeholder="+91 98765 43210"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="subject" class="form-label">Subject *</label>
-    <input 
-      type="text" 
-      id="subject" 
-      name="subject" 
-      class="form-input" 
-      required 
-      placeholder="What's this about?"
-    />
-  </div>
-  
-  <div class="form-group">
-    <label for="message" class="form-label">Message *</label>
-    <textarea 
-      id="message" 
-      name="message" 
-      class="form-textarea" 
-      required 
-      placeholder="Tell us about your query..."
-      rows="5"
-    ></textarea>
-  </div>
-  
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary btn-lg">
-      <span class="btn-text">Start The Conversation</span>
-      <span class="btn-spinner" style="display: none;">Delivering Your Message...</span>
-    </button>
+  <div id="form-content">
+    <div class="form-group">
+      <label for="name" class="form-label">Name *</label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        class="form-input" 
+        required 
+        placeholder="Your full name"
+      />
+      <div class="field-error" id="name-error"></div>
+    </div>
+    
+    <div class="form-group">
+      <label for="email" class="form-label">Email *</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        class="form-input" 
+        required 
+        placeholder="your.email@example.com"
+      />
+      <div class="field-error" id="email-error"></div>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone" class="form-label">Phone *</label>
+      <input 
+        type="tel" 
+        id="phone" 
+        name="phone" 
+        class="form-input" 
+        required
+        placeholder="9876543210"
+      />
+      <div class="field-error" id="phone-error"></div>
+    </div>
+    
+    <div class="form-group">
+      <label for="subject" class="form-label">Subject *</label>
+      <input 
+        type="text" 
+        id="subject" 
+        name="subject" 
+        class="form-input" 
+        required 
+        placeholder="What's this about?"
+      />
+      <div class="field-error" id="subject-error"></div>
+    </div>
+    
+    <div class="form-group">
+      <label for="message" class="form-label">Message *</label>
+      <textarea 
+        id="message" 
+        name="message" 
+        class="form-textarea" 
+        required 
+        placeholder="Tell us about your query..."
+        rows="5"
+      ></textarea>
+      <div class="field-error" id="message-error"></div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary btn-lg">
+        <span class="btn-text">Start The Conversation</span>
+        <span class="btn-spinner" style="display: none;">Delivering Your Message...</span>
+      </button>
+    </div>
   </div>
   
   <div class="form-success" id="form-success" style="display: none;" role="alert">
@@ -179,6 +187,13 @@
     color: #ef4444;
     margin: 0;
   }
+
+  .field-error {
+    color: #fca5a5;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: none;
+  }
   
   .btn-spinner {
     display: none !important;
@@ -207,29 +222,63 @@
     if (!form) return;
     
     function validateField(field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
-      let isValid = true;
+      const value = field.value.trim();
+      let errorText = "";
       
-      if (field.hasAttribute('required') && !field.value.trim()) {
-        isValid = false;
-      } else if (field.type === 'email' && field.value.trim()) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(field.value.trim())) {
-          isValid = false;
-        }
-      } else if (field.type === 'tel' && field.value.trim()) {
-        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-        if (!phoneRegex.test(field.value.trim().replace(/\s+/g, ''))) {
-          isValid = false;
+      // Check if required field is empty
+      if (field.hasAttribute('required') && !value) {
+        errorText = "This field is required.";
+      } else if (value) {
+        // Specific validation rules
+        switch (field.id) {
+          case 'email':
+            if (!/^(?!.*\.\.)[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]{1,253}\.[a-zA-Z]{2,}$/.test(value)) {
+              errorText = "Invalid email format.";
+            }
+            break;
+            
+          case 'phone':
+            if (value.length !== 10 || Number.isNaN(Number(value))) {
+              errorText = "Invalid mobile number.";
+            }
+            break;
+            
+          case 'name':
+            if (value.length > 25 || value.length < 3) {
+              errorText = "Name should be between 3 and 25 characters.";
+            }
+            break;
+            
+          case 'subject':
+            if (value.length > 50 || value.length < 6) {
+              errorText = "Subject should be concise between 6 and 50 characters.";
+            }
+            break;
+            
+          case 'message':
+            if (value.length > 1024 || value.length < 6) {
+              errorText = "Message should be between 6 and 1024 characters.";
+            }
+            break;
         }
       }
       
-      if (isValid) {
-        field.classList.remove('error');
-      } else {
+      const errorElement = document.getElementById(`${field.id}-error`);
+      
+      if (errorText) {
         field.classList.add('error');
+        if (errorElement) {
+          errorElement.textContent = errorText;
+          errorElement.style.display = 'block';
+        }
+        return false;
+      } else {
+        field.classList.remove('error');
+        if (errorElement) {
+          errorElement.style.display = 'none';
+        }
+        return true;
       }
-      
-      return isValid;
     }
     
     const fields = form.querySelectorAll('input, select, textarea');
@@ -248,8 +297,10 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      alert("Not implemented yet");
-      return;
+      // Prevent multiple submissions
+      if (form.classList.contains('form-submitting')) {
+        return;
+      }
       
       let isFormValid = true;
       fields.forEach(field => {
@@ -266,27 +317,46 @@
       }
       
       form.classList.add('form-submitting');
+      if (errorMessage) errorMessage.style.display = 'none';
       
       try {
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const data: any = Object.fromEntries(formData.entries());
         
-        // ToDo: Replace with actual API call
-        // For now, show success message and optionally open email client
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+        // Map phone to mobile as per API requirement
+        if (data.phone) {
+          data.mobile = data.phone;
+          delete data.phone;
+        }
         
-        // Display success message
+        const response = await fetch("https://tez-aid.hack-nocturne.in", { 
+          method: "POST", 
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Hide form content and show success message
+        const formContent = document.getElementById('form-content');
+        if (formContent) {
+          formContent.style.display = 'none';
+        }
+        
         if (successMessage) {
           successMessage.style.display = 'block';
         }
         
         form.reset();
-        
-        // ToDo: Open email client as fallback
-        // window.location.href = `mailto:contact@hack-nocturne.in?subject=${subject}&body=${body}`;
       } catch (error) {
         console.error('Form submission error:', error);
-        alert('There was an error sending your message. Please try again or contact us directly at contact@hack-nocturne.in');
+        if (errorMessage) {
+          errorMessage.style.display = 'block';
+        }
       } finally {
         form.classList.remove('form-submitting');
       }
