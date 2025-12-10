@@ -6,7 +6,7 @@ A premier 24-hour hackathon experience brought to you by TechHub Community & Glu
 
 ## 🎯 Event Details
 
-- **📅 Date:** March 06-07, 2026
+- **📅 Date:** March 13-14, 2026
 - **📍 Venue:** Sir MVIT Campus, Bengaluru, India
 - **⏰ Duration:** 24 Hours
 - **🏆 Prize Pool:** $1,130+

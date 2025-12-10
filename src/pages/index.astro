@@ -11,7 +11,7 @@ import Footer from "../components/Footer.astro";
 
 const title = "Hack-Nocturne '26 | The Premier Hackathon Experience";
 const description =
-  "Join Hack-Nocturne '26, a 24-hour hackathon at Sir MVIT Bengaluru on March 06-07. Open track, ₹1,50,000+ in prizes, exciting swags, refreshments & internship opportunities. Through the Night, Ideas Take Flight!";
+  "Join Hack-Nocturne '26, a 24-hour hackathon at Sir MVIT Bengaluru on March 13-14. Open track, ₹1,50,000+ in prizes, exciting swags, refreshments & internship opportunities. Through the Night, Ideas Take Flight!";
 ---
 
 <Layout title={title} description={description}>
@@ -26,11 +26,20 @@ const description =
   <Header />
 
   <main id="main-content">
+    <!-- Redirect Error Box -->
+    <div id="redirect-error" class="redirect-error" style="display: none;">
+      <div class="redirect-content">
+        <span class="redirect-icon">⚠️</span>
+        <p class="redirect-msg">The link <code id="broken-path"></code> appears to be broken or invalid.</p>
+        <button id="dismiss-error" class="dismiss-btn" aria-label="Dismiss">×</button>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <section id="hero" class="hero section">
       <div class="hero-content">
         <div class="hero-badge">
-          <span class="badge-text">March 06-07, 2026 • Bengaluru, India</span>
+          <span class="badge-text">March 13-14, 2026 • Bengaluru, India</span>
         </div>
 
         <h1 class="hero-title text-gradient text-glow">Hack-Nocturne '26</h1>
@@ -233,7 +242,7 @@ const description =
 
         <div class="calendar-row">
           <a
-            href="https://www.google.com/calendar/render?action=TEMPLATE&text=Hack-Nocturne%20'26&dates=20260306T040000Z/20260307T103000Z&details=Through%20the%20Night%2C%20Ideas%20Take%20Flight%0A%0AWebsite%3A%20https%3A%2F%2Fhack-nocturne.in&location=Sir%20M.%20Visvesvaraya%20Institute%20of%20Technology%2C%20International%20Airport%20Road%2C%20Hunasamaranahalli%2C%20Yelahanka%2C%20Bengaluru%2C%20Karnataka%20562157&ctz=Asia/Kolkata"
+            href="https://www.google.com/calendar/render?action=TEMPLATE&text=Hack-Nocturne%20'26&dates=20260313T040000Z/20260314T103000Z&details=Through%20the%20Night%2C%20Ideas%20Take%20Flight%0A%0AWebsite%3A%20https%3A%2F%2Fhack-nocturne.in&location=Sir%20M.%20Visvesvaraya%20Institute%20of%20Technology%2C%20International%20Airport%20Road%2C%20Hunasamaranahalli%2C%20Yelahanka%2C%20Bengaluru%2C%20Karnataka%20562157&ctz=Asia/Kolkata"
             class="btn btn-accent btn-lg"
             target="_blank"
             rel="noopener"
@@ -248,7 +257,7 @@ const description =
     <section id="prizes" class="section">
       <div class="container">
         <div class="section-header text-center">
-          <h2 class="section-title">Prizes</h2>
+          <h2 class="section-title">Previous Prizes</h2>
           <p class="section-subtitle">
             Exciting rewards and swags await the most innovative minds
           </p>
@@ -319,6 +328,29 @@ const description =
 
   <Footer />
   <script is:inline async src="/scripts/devfolio-sdk.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const brokenPath = urlParams.get('re');
+      
+      if (brokenPath) {
+        const errorBox = document.getElementById('redirect-error');
+        const pathEl = document.getElementById('broken-path');
+        
+        if (errorBox && pathEl) {
+          pathEl.textContent = brokenPath;
+          errorBox.style.display = 'block';
+          
+          document.getElementById('dismiss-error')?.addEventListener('click', () => {
+            errorBox.style.display = 'none';
+          });
+          
+          const newUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, newUrl);
+        }
+      }
+    });
+  </script>
 </Layout>
 
 <style>
@@ -726,5 +758,68 @@ const description =
     .social-grid {
       flex-direction: row;
     }
+  }
+
+  /* Redirect Error Box Styles */
+  .redirect-error {
+    position: fixed;
+    top: 54px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    background: rgba(20, 10, 30, 0.95);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-left: 4px solid #ef4444;
+    border-radius: var(--radius-lg);
+    padding: 12px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    animation: slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 100%;
+    width: auto;
+    min-width: 300px;
+  }
+
+  .redirect-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-white);
+  }
+
+  .redirect-msg {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  #broken-path {
+    background: rgba(239, 68, 68, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #fca5a5;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+
+  .dismiss-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 0 0 0 12px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .dismiss-btn:hover {
+    color: var(--color-white);
+  }
+
+  @keyframes slideDown {
+    from { transform: translate(-50%, -100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
   }
 </style>
