@@ -329,27 +329,25 @@ const description =
   <Footer />
   <script is:inline async src="/scripts/devfolio-sdk.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const brokenPath = urlParams.get('re');
+    const urlParams = new URLSearchParams(window.location.search);
+    const brokenPath = urlParams.get('re');
+    
+    if (brokenPath) {
+      const errorBox = document.getElementById('redirect-error');
+      const pathEl = document.getElementById('broken-path');
       
-      if (brokenPath) {
-        const errorBox = document.getElementById('redirect-error');
-        const pathEl = document.getElementById('broken-path');
+      if (errorBox && pathEl) {
+        pathEl.textContent = brokenPath;
+        errorBox.style.display = 'block';
         
-        if (errorBox && pathEl) {
-          pathEl.textContent = brokenPath;
-          errorBox.style.display = 'block';
-          
-          document.getElementById('dismiss-error')?.addEventListener('click', () => {
-            errorBox.style.display = 'none';
-          });
-          
-          const newUrl = window.location.pathname;
-          window.history.replaceState({}, document.title, newUrl);
-        }
+        document.getElementById('dismiss-error')?.addEventListener('click', () => {
+          errorBox.style.display = 'none';
+        });
+        
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
       }
-    });
+    }
   </script>
 </Layout>
 
