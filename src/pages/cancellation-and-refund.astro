@@ -1,0 +1,295 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  title="Cancellation & Refund Policy - Hack-Nocturne '26"
+  description="Cancellation and refund policy for Hack-Nocturne hackathon platform."
+>
+  <Header showMenu={false} showBackLink={true} />
+  
+  <main class="legal-page">
+    <div class="container">
+      <div class="legal-content">
+        <header class="legal-header">
+          <h1>Cancellation & Refund Policy</h1>
+          <div class="legal-meta">
+            <span><strong>Effective Date:</strong> December 16, 2025</span>
+            <span><strong>Contact:</strong> <a href="mailto:contact+refund@hack-nocturne.in">contact+refund@hack-nocturne.in</a></span>
+          </div>
+        </header>
+
+        <section class="legal-section">
+          <h2>1. Cancellation Policy</h2>
+          <div class="legal-subsection">
+            <p><strong>1.1. Request Process:</strong> Participants requesting cancellation must provide valid reasons for their withdrawal. All cancellation requests are subject to approval by the organizing team on a case-by-case basis.</p>
+            <p><strong>1.2. Deadline:</strong> Cancellation requests must be submitted at least 30 days prior to the event start date. Requests made after this deadline will strictly not be accepted.</p>
+          </div>
+        </section>
+
+        <section class="legal-section">
+          <h2>2. Refund Policy</h2>
+          <div class="legal-subsection">
+            <p><strong>2.1. Eligibility:</strong> Refunds are only allowed if the participant requests it within 15 days of making the payment, provided the cancellation request is also approved as per Section 1.</p>
+            <p><strong>2.2. Deductions:</strong> A service charge of 3% will be deducted from the total paid amount for all processed refunds.</p>
+            <p><strong>2.3. Late Cancellations:</strong> No refunds will be processed for cancellation requests made after the 30-day prior deadline mentioned in Section 1.2.</p>
+            <p><strong>2.4. Processing Timeline:</strong> Approved refunds will be processed within 5 to 7 working days to the original payment method.</p>
+          </div>
+        </section>
+
+        <section class="legal-section">
+          <h2>3. Contact Information</h2>
+          <p>For any queries related to cancellations or refunds, please contact us via:</p>
+          <div class="legal-subsection">
+            <p><strong>Email:</strong> <a href="mailto:contact+refund@hack-nocturne.in">contact+refund@hack-nocturne.in</a></p>
+            <p><strong>Phone:</strong> +91 7892745487 (Suparn)</p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+  
+  <Footer hideMargin />
+</Layout>
+
+<style>
+  .legal-page {
+    min-height: 100vh;
+    background: var(--color-bg-primary);
+    padding: var(--space-20) 0 var(--space-16);
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+
+  .legal-content {
+    background: var(--color-bg-secondary);
+    border: 2px solid var(--color-frosted-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-12);
+    box-shadow: var(--shadow-2xl);
+    backdrop-filter: blur(20px);
+  }
+
+  .legal-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 2px solid var(--color-frosted-border);
+  }
+
+  .legal-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-6);
+    line-height: var(--line-height-tight);
+  }
+
+  .legal-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .legal-meta span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-md);
+  }
+
+  .legal-section {
+    margin-bottom: var(--space-10);
+    scroll-margin-top: var(--space-20);
+  }
+
+  .legal-section h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-6);
+    line-height: var(--line-height-tight);
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--space-4);
+  }
+
+  .legal-section h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+    line-height: var(--line-height-snug);
+  }
+
+  .legal-section p {
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-md);
+  }
+
+  .legal-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .legal-subsection {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-top: var(--space-4);
+  }
+
+  .legal-subsection p {
+    margin-bottom: var(--space-4);
+  }
+
+  .legal-subsection p:last-child {
+    margin-bottom: 0;
+  }
+
+  .legal-footer {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 2px solid var(--color-frosted-border);
+    text-align: center;
+  }
+
+  .contact-info {
+    margin-bottom: var(--space-6);
+  }
+
+  .contact-info h3 {
+    color: var(--color-white);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-info p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .last-updated {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Links */
+  a {
+    color: var(--color-text-link);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    font-weight: var(--font-weight-medium);
+  }
+
+  a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Strong/Bold text styling */
+  strong {
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .legal-page {
+      padding: var(--space-16) 0 var(--space-12);
+    }
+
+    .container {
+      padding: 0 var(--space-4);
+    }
+
+    .legal-content {
+      padding: var(--space-8);
+    }
+
+    .legal-header h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .legal-meta {
+      text-align: left;
+    }
+
+    .legal-section h2 {
+      font-size: var(--font-size-xl);
+    }
+
+    .legal-section p {
+      font-size: var(--font-size-sm);
+    }
+
+    .legal-subsection {
+      padding: var(--space-4);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .legal-header h1 {
+      font-size: var(--font-size-2xl);
+    }
+
+    .legal-section h2 {
+      font-size: var(--font-size-lg);
+      border-left-width: 3px;
+      padding-left: var(--space-3);
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .legal-page {
+      background: white;
+      color: black;
+    }
+
+    .legal-content {
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: none;
+    }
+
+    .legal-header h1,
+    .legal-section h2,
+    .legal-section h3,
+    strong {
+      color: black;
+    }
+
+    .legal-section p,
+    .contact-info p,
+    .legal-meta p {
+      color: black;
+    }
+
+    a {
+      color: blue;
+      text-decoration: underline;
+    }
+  }
+</style>

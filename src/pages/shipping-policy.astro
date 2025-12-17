@@ -1,0 +1,303 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  title="Shipping Policy - Hack-Nocturne '26"
+  description="Shipping policy for Hack-Nocturne hackathon platform."
+>
+  <Header showMenu={false} showBackLink={true} />
+  
+  <main class="legal-page">
+    <div class="container">
+      <div class="legal-content">
+        <header class="legal-header">
+          <h1>Shipping Policy</h1>
+          <div class="legal-meta">
+            <span><strong>Effective Date:</strong> December 16, 2025</span>
+            <span><strong>Contact:</strong> <a href="mailto:contact@hack-nocturne.in">contact@hack-nocturne.in</a></span>
+          </div>
+        </header>
+
+        <section class="legal-section">
+          <h2>1. Nature of Services</h2>
+          <div class="legal-subsection">
+            <p><strong>1.1. Digital Offerings:</strong> Hack-Nocturne is a hackathon event and organizing platform. We do not sell or ship any physical goods or products to participants or users.</p>
+            <p><strong>1.2. Service Scope:</strong> All our offerings, including event registration, participation, and access to platform features, are strictly digital and online services.</p>
+          </div>
+        </section>
+
+        <section class="legal-section">
+          <h2>2. Delivery Method</h2>
+          <div class="legal-subsection">
+            <p><strong>2.1. Electronic Delivery:</strong> Delivery of our services is immediate and electronic. This includes, but is not limited to:</p>
+            <ul>
+                <li style="color: var(--color-text-secondary); margin-bottom: var(--space-2); margin-left: var(--space-4);">Confirmation emails sent to the registered email address.</li>
+                <li style="color: var(--color-text-secondary); margin-bottom: var(--space-2); margin-left: var(--space-4);">Access to the user dashboard and platform features upon login.</li>
+                <li style="color: var(--color-text-secondary); margin-bottom: var(--space-2); margin-left: var(--space-4);">API access or other digital credentials where applicable.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="legal-section">
+          <h2>3. Shipping Charges</h2>
+          <div class="legal-subsection">
+            <p><strong>3.1. No Fees:</strong> As there are no physical goods to be transported, no shipping, handling, or delivery charges apply to any transaction on this platform.</p>
+          </div>
+        </section>
+
+        <section class="legal-section">
+          <h2>4. Contact Information</h2>
+          <p>If you have any questions regarding the delivery of our digital services, please contact us:</p>
+          <div class="legal-subsection">
+            <p><strong>Email:</strong> <a href="mailto:contact@hack-nocturne.in">contact@hack-nocturne.in</a></p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+  
+  <Footer hideMargin />
+</Layout>
+
+<style>
+  .legal-page {
+    min-height: 100vh;
+    background: var(--color-bg-primary);
+    padding: var(--space-20) 0 var(--space-16);
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+  }
+
+  .legal-content {
+    background: var(--color-bg-secondary);
+    border: 2px solid var(--color-frosted-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-12);
+    box-shadow: var(--shadow-2xl);
+    backdrop-filter: blur(20px);
+  }
+
+  .legal-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 2px solid var(--color-frosted-border);
+  }
+
+  .legal-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--space-6);
+    line-height: var(--line-height-tight);
+  }
+
+  .legal-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .legal-meta span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-md);
+  }
+
+  .legal-section {
+    margin-bottom: var(--space-10);
+    scroll-margin-top: var(--space-20);
+  }
+
+  .legal-section h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-6);
+    line-height: var(--line-height-tight);
+    border-left: 4px solid var(--color-primary);
+    padding-left: var(--space-4);
+  }
+
+  .legal-section h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+    line-height: var(--line-height-snug);
+  }
+
+  .legal-section p {
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-md);
+  }
+
+  .legal-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .legal-subsection {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-top: var(--space-4);
+  }
+
+  .legal-subsection p {
+    margin-bottom: var(--space-4);
+  }
+
+  .legal-subsection p:last-child {
+    margin-bottom: 0;
+  }
+
+  .legal-footer {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 2px solid var(--color-frosted-border);
+    text-align: center;
+  }
+
+  .contact-info {
+    margin-bottom: var(--space-6);
+  }
+
+  .contact-info h3 {
+    color: var(--color-white);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-info p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+  }
+
+  .last-updated {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  /* Links */
+  a {
+    color: var(--color-text-link);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    font-weight: var(--font-weight-medium);
+  }
+
+  a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Strong/Bold text styling */
+  strong {
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .legal-page {
+      padding: var(--space-16) 0 var(--space-12);
+    }
+
+    .container {
+      padding: 0 var(--space-4);
+    }
+
+    .legal-content {
+      padding: var(--space-8);
+    }
+
+    .legal-header h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .legal-meta {
+      text-align: left;
+    }
+
+    .legal-section h2 {
+      font-size: var(--font-size-xl);
+    }
+
+    .legal-section p {
+      font-size: var(--font-size-sm);
+    }
+
+    .legal-subsection {
+      padding: var(--space-4);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .legal-header h1 {
+      font-size: var(--font-size-2xl);
+    }
+
+    .legal-section h2 {
+      font-size: var(--font-size-lg);
+      border-left-width: 3px;
+      padding-left: var(--space-3);
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .legal-page {
+      background: white;
+      color: black;
+    }
+
+    .legal-content {
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: none;
+    }
+
+    .legal-header h1,
+    .legal-section h2,
+    .legal-section h3,
+    strong {
+      color: black;
+    }
+
+    .legal-section p,
+    .contact-info p,
+    .legal-meta p {
+      color: black;
+    }
+
+    a {
+      color: blue;
+      text-decoration: underline;
+    }
+  }
+</style>
