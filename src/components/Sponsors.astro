@@ -14,27 +14,8 @@ interface TierInfo {
 }
 
 const sponsors: Record<string, Sponsor[]> = {
-  gold: [
-    {
-      name: "Concurrence AI",
-      logo: "/images/sponsors/concurrence.webp",
-      website: "https://concurrence.ai/",
-      description: "Build Safer Communities with AI Chat Moderation"
-    },
-    {
-      name: "Zintlr",
-      logo: "/images/sponsors/zintlr.webp", 
-      website: "https://zintlr.com/",
-      description: "Access Data That Converts - Identify and reach your ideal customers using the largest and most accurate contact database of 250M+ business profiles."
-    }
-  ],
+  gold: [],
   silver: [
-    {
-      name: "Polygon",
-      logo: "/images/sponsors/polygon.webp",
-      website: "https://polygon.technology/",
-      description: "Polygon is the fast, low-cost blockchain powering real-world assets and global payments, used by millions every day."
-    },
     {
       name: "ETHIndia",
       logo: "/images/sponsors/ethindia.webp",
@@ -47,61 +28,10 @@ const sponsors: Record<string, Sponsor[]> = {
       website: "https://devfolio.co/",
       description: "Devfolio for communities. No more creating Google Forms and managing participants in an Excel sheet. You focus on your people, leave the rest to us."
     },
-    {
-      name: "Tvara",
-      logo: "/images/sponsors/tvara.webp",
-      website: "https://tvara.org/",
-      description: "Tvara delivers AI solutions for manufacturing, real estate, and design-and-build, empowering your enterprise to scale with generative AI."
-    }
   ],
-  bronze: [
-    {
-      name: "theDevArmy",
-      logo: "/images/sponsors/thedevarmy.webp",
-      website: "https://thedevarmy.com/",
-      description: "Developer community"
-    },
-    {
-      name: "Appwrite",
-      logo: "/images/sponsors/appwrite.webp",
-      website: "https://appwrite.io/",
-      description: "Open-source, all-in-one development platform. Use built-in backend infrastructure and web hosting, all from a single place."
-    },
-    {
-      name: "InterviewBuddy",
-      logo: "/images/sponsors/interviewbuddy.webp",
-      website: "https://interviewbuddy.net/",
-      description: "Master the art of interviewing with AI-powered mock sessions, expert feedback and personalized coaching that gets you hired at top companies"
-    },
-    {
-      name: "NetCredential",
-      logo: "/images/sponsors/netcredential.webp",
-      website: "https://netcredential.com/",
-      description: "A Complete Digital Credential Platform"
-    },
-    {
-      name: "EndlessDomains",
-      logo: "/images/sponsors/endlessdomains.webp",
-      website: "https://endlessdomains.io/",
-      description: "Web3 Domains in one place."
-    }
-  ],
-  platform: [
-    {
-      name: "0xDay",
-      logo: "/images/sponsors/0xday.webp",
-      website: "https://0x.day/",
-      description: "HACK high-impact hackathons across the deep tech"
-    }
-  ],
-  domain: [
-    {
-      name: ".xyz",
-      logo: "/images/sponsors/xyz.webp",
-      website: "https://gen.xyz/",
-      description: "Domain provider - For every website, everywhere"
-    }
-  ]
+  bronze: [],
+  platform: [],
+  domain: []
 };
 
 const tierInfo: Record<string, TierInfo> = {
@@ -114,49 +44,70 @@ const tierInfo: Record<string, TierInfo> = {
 ---
 
 <div class="spnsr-container">
-  {Object.entries(sponsors).map(([tier, sponsorList]) => (
-    <div class="spnsr-tier">
-      <h3 class="tier-title" style={`color: ${tierInfo[tier].color}`}>
-        {tierInfo[tier].title}
-      </h3>
-      
-      <div class={`spnsr-grid spnsr-grid-${tier}`}>
-        {sponsorList.map((sponsor) => (
-          <div class="spnsr-card-minimal">
-            <a 
-              href={sponsor.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="spnsr-link"
-              aria-label={`Visit ${sponsor.name} website`}
-            >
-              <div class="spnsr-logo-minimal">
-                <img 
-                  src={sponsor.logo}
-                  alt={`${sponsor.name} logo`}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              
-              <!-- CSS-only popover -->
-              <div class="spnsr-popover">
-                <div class="popover-content">
-                  <h4 class="popover-name">{sponsor.name}</h4>
-                  <p class="popover-description">{sponsor.description}</p>
-                  <div class="popover-website">{new URL(sponsor.website).hostname}</div>
-                  <div class="popover-arrow"></div>
-                </div>
-              </div>
-            </a>
-          </div>
-        ))}
-      </div>
+  {Object.values(sponsors).every(list => list.length === 0) ? (
+    <div class="no-spnsr">
+      <p>Sponsors to be announced soon!</p>
     </div>
-  ))}
+  ) : (
+    Object.entries(sponsors).map(([tier, sponsorList]) => (
+      sponsorList.length > 0 && (
+        <div class="spnsr-tier">
+          <h3 class="tier-title" style={`color: ${tierInfo[tier].color}`}>
+            {tierInfo[tier].title}
+          </h3>
+          
+          <div class={`spnsr-grid spnsr-grid-${tier}`}>
+            {sponsorList.map((sponsor) => (
+              <div class="spnsr-card-minimal">
+                <a 
+                  href={sponsor.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="spnsr-link"
+                  aria-label={`Visit ${sponsor.name} website`}
+                >
+                  <div class="spnsr-logo-minimal">
+                    <img 
+                      src={sponsor.logo}
+                      alt={`${sponsor.name} logo`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  
+                  <!-- CSS-only popover -->
+                  <div class="spnsr-popover">
+                    <div class="popover-content">
+                      <h4 class="popover-name">{sponsor.name}</h4>
+                      <p class="popover-description">{sponsor.description}</p>
+                      <div class="popover-website">{new URL(sponsor.website).hostname}</div>
+                      <div class="popover-arrow"></div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    ))
+  )}
 </div>
 
 <style>
+  .no-spnsr {
+    text-align: center;
+    padding: 2rem;
+    background: var(--color-frosted);
+    border-radius: var(--radius-lg);
+    color: var(--color-gray-300);
+    border: 1px dashed var(--color-gray-500);
+  }
+
+  .no-spnsr p {
+    margin-bottom: 0;
+  }
+
   .spnsr-container {
     max-width: 680px;
     margin: 0 auto;

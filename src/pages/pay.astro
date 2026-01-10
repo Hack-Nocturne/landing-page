@@ -1,0 +1,936 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+---
+
+<Layout 
+  title="Secure Checkout - Hack-Nocturne '26"
+  description="Secure payment gateway for Hack-Nocturne '26 participation."
+>
+  <Header showMenu={false} showBackLink={true} />
+
+  <div id="page-loader" class="loader-container">
+    <div class="fluid-loader">
+      <div class="loader-blob"></div>
+      <div class="loader-blob"></div>
+      <div class="loader-blob"></div>
+    </div>
+    <p class="loader-text">Give us a Bit....</p>
+  </div>
+
+  <main class="checkout-page hidden" id="main-content">
+    <div class="checkout-card">
+        <div class="checkout-grid">
+          <!-- Left Column: Details -->
+          <div class="details-column">
+            
+            <div class="welcome-section">
+              <span class="welcome-text" id="welcome-text">Welcome Team</span>
+            </div>
+
+            <!-- What you get section -->
+            <section class="info-box">
+              <h3 class="section-title">What's Included</h3>
+              <ul class="benefits-list">
+                <li>
+                  <span class="icon">🍔</span>
+                  <div class="benefit-text">
+                    <strong>Food & Refreshments</strong>
+                  </div>
+                </li>
+                <li>
+                  <span class="icon">🛏️</span>
+                  <div class="benefit-text">
+                    <strong>Accommodation & Stay</strong>
+                  </div>
+                </li>
+                <li>
+                  <span class="icon">✅</span>
+                  <div class="benefit-text">
+                    <strong>Slot Confirmation</strong>
+                  </div>
+                </li>
+              </ul>
+            </section>
+
+            <!-- Team Members Section -->
+            <section class="info-box">
+              <h3 class="section-title">Team Members</h3>
+              <div class="members-list" id="members-list">
+                <!-- Members will be injected here -->
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Right Column: Payment -->
+          <div class="payment-column">
+            <div class="payment-summary">
+              <div class="price-display">
+                <span class="currency">₹</span>
+                <span class="amount" id="price-amount">0.00</span>
+                <span class="currency-code">INR</span>
+              </div>
+              <span class="tax-note">Inclusive of all taxes</span>
+            </div>
+
+            <div class="legal-check">
+              <label class="checkbox-container">
+                <input type="checkbox" id="terms-checkbox">
+                <span class="checkmark"></span>
+                <span class="label-text">
+                  By proceeding, I confirm that I have read, understood, and agree to the
+                  <a href="/terms-and-conditions/" target="_blank">Terms & Conditions</a>, 
+                  <a href="/privacy-policy/" target="_blank">Privacy Policy</a>, and 
+                  <a href="/cancellation-and-refund/" target="_blank">Cancellation & Refund Policy</a>.
+                </span>
+              </label>
+            </div>
+
+            <div class="important-notes">
+              <h4>Important Notes:</h4>
+              <ul>
+                <li>The Team Lead will be emailed a payment receipt once the transaction is confirmed.</li>
+                <li>Exclusive platform access will be activated for all members shortly after confirmation.</li>
+                <li>To avoid missing updates, please add <strong>team@hack-nocturne.in</strong> to your safe sender list.</li>
+              </ul>
+            </div>
+
+            <button id="pay-button" class="pay-button" disabled>
+              <span class="btn-text">Confirm & Pay</span>
+              <span class="btn-loader hidden"></span>
+            </button>
+            
+            <div id="error-message" class="error-message hidden"></div>
+          </div>
+        </div>
+
+      </div>
+  </main>
+
+  <Footer hideMargin />
+
+  <!-- Popup Modal -->
+  <div id="popup-modal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <h3 id="popup-title" class="modal-title">Title</h3>
+      <p id="popup-message" class="modal-message">Message goes here...</p>
+      <button id="popup-close-btn" class="modal-btn">Close</button>
+    </div>
+  </div>
+</Layout>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  declare const Razorpay: any;
+
+  const loader = document.getElementById('page-loader');
+  const mainContent = document.getElementById('main-content');
+  const welcomeText = document.getElementById('welcome-text');
+  const priceAmount = document.getElementById('price-amount');
+  const membersList = document.getElementById('members-list');
+  const errorMessage = document.getElementById('error-message');
+  const termsCheckbox = document.getElementById('terms-checkbox') as HTMLInputElement;
+  const payButton = document.getElementById('pay-button') as HTMLButtonElement;
+  const btnLoader = payButton?.querySelector('.btn-loader');
+  const btnText = payButton?.querySelector('.btn-text');
+
+  // Popup Elements
+  const popupModal = document.getElementById('popup-modal');
+  const popupTitle = document.getElementById('popup-title');
+  const popupMessage = document.getElementById('popup-message');
+  const popupCloseBtn = document.getElementById('popup-close-btn');
+
+  function showPopup(title: string, msg: string, isOk: boolean, btnLabel: string = "Close") {
+    if (!popupModal || !popupTitle || !popupMessage || !popupCloseBtn) return;
+
+    popupTitle.textContent = title;
+    popupMessage.innerHTML = msg;
+    popupCloseBtn.textContent = btnLabel;
+
+    const modalBox = popupModal.querySelector('.modal-box');
+    modalBox?.classList.remove('success', 'error');
+    modalBox?.classList.add(isOk ? 'success' : 'error');
+
+    popupModal.classList.remove('hidden');
+  }
+
+  popupCloseBtn?.addEventListener('click', () => {
+    popupModal?.classList.add('hidden');
+  });
+
+  // Dynamically determine API base URL based on env
+  const isLocal = window.location.protocol === "http:";
+  const API_BASE = isLocal ? 'http://localhost:2442' : 'https://api.hack-nocturne.in';
+  const urlParams = new URLSearchParams(window.location.search);
+  const et_code = urlParams.get('et');
+
+  if (!et_code) {
+    window.location.href = '/';
+    throw new Error('Entity code missing in URL');
+  }
+
+  let teamData: any = null;
+  let leadMember: any = null;
+
+  try {
+    const response = await fetch(`${API_BASE}/g/payment/teams-n-price?et_code=${et_code}`);
+    if (!response.ok) throw new Error('Failed to fetch team details');
+    teamData = await response.json();
+  } catch (error) {
+    console.error('Error fetching team data:', error);
+    showPopup(
+      "❌ Unable to Load Team Details",
+      `We encountered an issue while retrieving your team information. Please ensure that you have active internet connection and have accessed this page through the correct link provided in the payment email.<br/><br/><i>If the problem persists, kindly <a href="https://hack-nocturne.in/#contact" target="_blank">contact our support team</a> for assistance.</i>`,
+      false, "Ok Got It!"
+    );
+  }
+
+  if (teamData) {
+    if (welcomeText) welcomeText.innerHTML = `Welcome <span class="team-name-highlight">${teamData.team}</span>`;
+    if (priceAmount) priceAmount.textContent = teamData.price.toFixed(2);
+
+    // Sort members to have leader first
+    const sortedMembers = teamData.members.sort((a: any, b: any) => {
+      return (a.is_leader === b.is_leader) ? 0 : a.is_leader ? -1 : 1;
+    });
+
+    leadMember = sortedMembers.find((m: any) => m.is_leader);
+
+    if (membersList) {
+      membersList.innerHTML = sortedMembers.map((member: any) => `
+        <div class="member-item ${member.is_leader ? 'is-lead' : ''}">
+          <div class="member-info">
+            <span class="member-name">${member.first_name}&nbsp;${member.last_name}</span>
+            <span class="member-email">${member.email}</span>
+          </div>
+          ${member.is_leader ? '<span class="lead-badge">👑 Lead</span>' : ''}
+        </div>
+      `).join('');
+    }
+
+    // Done rendering, now hide the loader
+    loader?.classList.add('hidden');
+    mainContent?.classList.remove('hidden');
+
+    if (teamData.paid) {
+      showPopup(
+        "✅ Payment Already Completed",
+        `Your team <strong>${teamData.team}</strong> has already completed the payment process. If you believe this is an error or have any questions, please <a href="https://hack-nocturne.in/#contact" target="_blank">contact our support team</a> for assistance.`,
+        true, "Got It!"
+      );
+    }
+  }
+
+  termsCheckbox?.addEventListener('change', (e) => 
+    (payButton) && (payButton.disabled = !(e.target as HTMLInputElement).checked || teamData?.paid)
+  );
+
+  async function successHandler(resp: any, attempts = 1) {
+    const { razorpay_order_id, razorpay_payment_id } = resp;
+    
+    btnText!.textContent = "Confirming...";
+    btnText?.classList.remove('hidden');
+    btnLoader?.classList.add('hidden');
+
+    try {
+      const urlParams = new URLSearchParams({ oid: razorpay_order_id, pid: razorpay_payment_id });
+      const response = await fetch(`${API_BASE}/g/payment/check?${urlParams.toString()}`);
+      if (response.ok) {
+        showPopup(
+          "🎉 Payment Successful",
+          `Thank you, <strong>${leadMember?.first_name}</strong>!<br/>Your payment for team <strong>${teamData.team}</strong> has been successfully processed. You will shortly receive a receipt with confirmation at: <b>${leadMember?.email}</b>.<br/><br/><i>Redirecting to homepage in 10 seconds....</i>`,
+          true, "Wow Awesome!"
+        );
+
+        setTimeout(() => window.location.href = '/', 10_000);
+        return;
+      }
+    } catch (error) {
+      console.error('Error confirming payment:', error);
+    }
+
+    if (attempts < 3) {
+      const jitter = Math.floor(Math.random() * 2_000); // random jitter up to 2 sec
+      const delay = (Math.pow(2, attempts) * 1000) + jitter; // exponential backoff with jitter
+      setTimeout(() => successHandler({ razorpay_order_id }, attempts + 1), delay);
+      return;
+    } else {
+      showPopup(
+        "❌ Payment Confirmation Failed",
+        `We were unable to confirm your payment after multiple attempts, if you do not receive a payment confirmation in the next 24 hours at your email, please <a href="https://hack-nocturne.in/#contact" target="_blank">raise a support ticket</a> and include following details<br/><br/>Team name: <strong>${teamData.team}</strong><br/>Order ID: <strong>${razorpay_order_id}</strong><br/>Payment ID: <strong>${razorpay_payment_id}</strong>.<br/><br/><i>Please preserve this information for reference.<br/>We apologize for the inconvenience caused.</i>`,
+        false, "I Understand"
+      );
+    }
+
+    btnText!.textContent = "It's Over!";
+  }
+
+  payButton?.addEventListener('click', async () => {
+    if (!teamData) return;
+
+    // Prepare Phase
+    // Disable button and show loader
+    payButton.disabled = true;
+    btnText?.classList.add('hidden');
+    btnLoader?.classList.remove('hidden');
+    if (errorMessage) errorMessage.classList.add('hidden');
+
+    try {
+      // Gather Info Phase
+      // Fetch payment initiation data from the server
+      const response = await fetch(`${API_BASE}/g/payment/initiate`, {
+        body: JSON.stringify({ et_code, tos_accepted: termsCheckbox?.checked }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+      });
+
+      if (!response.ok) throw new Error('Payment initiation failed');
+      const data = await response.json();
+      
+      // Payment Phase
+      // Cook options for Razorpay ingestion
+      var options = {
+        "currency": "INR",
+        "key": data.key_id,
+        "name": "Hack-Nocturne",
+        "handler": successHandler,
+        "order_id": data.order_id,
+        "amount": data.amount_paise,
+        "image": "https://hack-nocturne.in/logo.webp",
+        "description": `Hack-Nocturne '26 Hosting Fee for Team ${teamData.team}`,
+
+        "prefill": {
+          "email": leadMember?.email,
+          "contact": leadMember?.phone_number,
+          "name": leadMember ? `${leadMember.first_name} ${leadMember.last_name}` : "",
+        },
+
+        "theme": {
+          "color": "#6927c4",
+          "backdrop_color": "#5a1d81aa"
+        }
+      };
+
+      // Setup Razorpay and register handler
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', ({ error }: any) =>
+        console.error("Payment Failed", error?.description)
+      );
+
+      // Finally open the Razorpay checkout modal
+      rzp.open();
+    } catch (error) {
+      console.error(error);
+      payButton.disabled = false;
+      btnText?.classList.remove('hidden');
+      btnLoader?.classList.add('hidden');
+      
+      if (errorMessage) {
+        errorMessage.textContent = "Something went wrong. Please try again.";
+        errorMessage.classList.remove('hidden');
+      }
+    }
+  });
+</script>
+
+<style>
+  /* Page Layout */
+  .checkout-page {
+    min-height: 100vh;
+    background: var(--color-bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    font-family: var(--font-family-primary);
+  }
+
+  .checkout-card {
+    width: 100%;
+    max-width: 1000px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-frosted-border);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-2xl);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .welcome-section {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-frosted-border);
+  }
+
+  .welcome-text {
+    line-height: 1.2;
+    color: var(--color-white);
+    font-size: var(--font-size-xl);
+  }
+
+  :global(.team-name-highlight) {
+    background: linear-gradient(135deg, var(--color-accent) 20%, var(--color-primary) 120%);
+    font-weight: var(--font-weight-bold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    display: inline-block;
+  }
+
+  /* Grid Layout */
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+
+  @media (max-width: 768px) {
+    .checkout-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Columns */
+  .details-column {
+    padding: var(--space-8);
+    border-right: 1px solid var(--color-frosted-border);
+  }
+
+  .payment-column {
+    padding: var(--space-8);
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .details-column {
+      border-right: none;
+      border-bottom: 1px solid var(--color-frosted-border);
+      padding: var(--space-5);
+    }
+
+    .payment-column {
+      padding: var(--space-5);
+    }
+
+    :global(.lead-badge) {
+      left: -8px;
+      top: -10px;
+      font-size: 0.65rem;
+      padding: 3px 8px;
+    }
+  }
+
+  /* Info Boxes */
+  .info-box {
+    margin-bottom: var(--space-8);
+  }
+
+  .info-box:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 2px solid var(--color-primary);
+    display: inline-block;
+    padding-bottom: var(--space-1);
+  }
+
+  /* Benefits List */
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .benefits-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--space-2);
+    background: var(--color-bg-tertiary);
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .benefits-list li:hover {
+    border-color: var(--color-primary);
+  }
+
+  .benefits-list .icon {
+    font-size: 1.5rem;
+    margin-right: var(--space-4);
+    line-height: 1;
+  }
+
+  .benefit-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .benefit-text strong {
+    color: var(--color-white);
+    margin-bottom: var(--space-1);
+  }
+
+  /* Members List */
+  :global(.members-list) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  :global(.member-item) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-lg);
+    position: relative;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  :global(.member-item:hover) {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--color-frosted-border);
+  }
+
+  :global(.member-item.is-lead) {
+    background: linear-gradient(to right, rgba(251, 191, 36, 0.05), var(--color-bg-tertiary));
+    border-color: rgba(251, 191, 36, 0.2);
+  }
+
+  :global(.member-info) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  :global(.member-name) {
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    line-height: 1.2;
+  }
+
+  :global(.member-email) {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    word-break: break-all;
+    opacity: 0.8;
+  }
+
+  :global(.lead-badge) {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    background: var(--color-accent);
+    color: var(--color-black);
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    letter-spacing: 0.5px;
+  }
+
+  /* Payment Summary */
+  .payment-summary {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    padding: var(--space-6);
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-frosted-border);
+  }
+
+  .price-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    color: var(--color-white);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  .currency {
+    font-size: var(--font-size-2xl);
+    margin-right: var(--space-1);
+    color: var(--color-text-muted);
+  }
+
+  .amount {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -1px;
+  }
+
+  .currency-code {
+    font-size: var(--font-size-lg);
+    margin-left: var(--space-2);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .tax-note {
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Checkbox */
+  .legal-check {
+    margin-bottom: var(--space-6);
+  }
+
+  .legal-check a {
+    color: var(--color-text-link);
+    text-decoration-style: dotted !important;
+    text-underline-offset: 2px;
+  }
+
+  .checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    height: 20px;
+    width: 20px;
+    background-color: var(--color-bg-tertiary);
+    border: 1px solid var(--color-gray-500);
+    border-radius: 4px;
+    margin-right: var(--space-3);
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s;
+    margin-top: 2px;
+  }
+
+  .checkbox-container:hover input ~ .checkmark {
+    border-color: var(--color-primary);
+  }
+
+  .checkbox-container input:checked ~ .checkmark {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .label-text {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+  }
+
+  .label-text a {
+    color: var(--color-text-link);
+    text-decoration: underline;
+  }
+
+  /* Important Notes */
+  .important-notes {
+    background: rgba(251, 191, 36, 0.05);
+    border-left: 3px solid var(--color-accent);
+    padding: var(--space-4);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    margin-bottom: var(--space-8);
+  }
+
+  .important-notes h4 {
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .important-notes ul {
+    padding-left: var(--space-4);
+    margin: 0;
+  }
+
+  .important-notes li {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--space-1);
+  }
+
+  /* Pay Button */
+  .pay-button {
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pay-button:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+  }
+
+  .pay-button:disabled {
+    background: var(--color-gray-700);
+    color: var(--color-gray-500);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .error-message {
+    color: #ef4444;
+    font-size: var(--font-size-sm);
+    text-align: center;
+    margin-top: var(--space-4);
+  }
+
+  /* Loader Styles */
+  .loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .fluid-loader {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    filter: url('#goo'); /* Optional: for gooey effect if SVG filter was present, but CSS blobs work well too */
+    animation: rotate 2s infinite linear;
+  }
+
+  .loader-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .loader-blob:nth-child(1) {
+    animation: blob-1 1.5s infinite ease-in-out;
+    background: var(--color-accent);
+  }
+
+  .loader-blob:nth-child(2) {
+    animation: blob-2 1.5s infinite ease-in-out;
+    background: var(--color-secondary);
+    animation-delay: 0.2s;
+  }
+
+  .loader-blob:nth-child(3) {
+    animation: blob-3 1.5s infinite ease-in-out;
+    background: var(--color-primary);
+    animation-delay: 0.4s;
+  }
+
+  .loader-text {
+    margin-top: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+  }
+
+  /* Button Loader */
+  .btn-loader {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+  }
+
+  /* Animations */
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes blob-1 {
+    0%, 100% { transform: translate(-50%, -50%) translate(0, -35px); }
+    50% { transform: translate(-50%, -50%) translate(0, 35px); }
+  }
+
+  @keyframes blob-2 {
+    0%, 100% { transform: translate(-50%, -50%) translate(-28px, 22px); }
+    50% { transform: translate(-50%, -50%) translate(28px, -22px); }
+  }
+
+  @keyframes blob-3 {
+    0%, 100% { transform: translate(-50%, -50%) translate(28px, 22px); }
+    50% { transform: translate(-50%, -50%) translate(-28px, -22px); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* Popup Modal Styles */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+  }
+
+  .modal-box {
+    background: var(--color-bg-secondary);
+    padding: 0;
+    border-radius: var(--radius-xl);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid var(--color-frosted-border);
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.5), 
+      0 8px 10px -6px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: scale(0.9);
+    animation: scaleUp 0.3s forwards;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-box.success {
+    border-color: rgba(16, 185, 129, 0.5);
+    background: linear-gradient(to bottom, rgb(3 66 0 / 66%), #00140e);
+  }
+
+  .modal-box.error {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: linear-gradient(to bottom, rgb(45 18 0 / 66%), #120000);
+  }
+
+  .modal-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    background: rgba(0, 0, 0, 0.25);
+    padding: var(--space-6);
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+  }
+
+  .modal-message {
+    color: var(--color-text-secondary);
+    padding: var(--space-6) var(--space-6) var(--space-4);
+    margin-bottom: var(--space-2);
+    line-height: 1.5;
+  }
+
+  .modal-btn {
+    align-self: center;
+    margin-bottom: var(--space-6);
+    padding: var(--space-3) var(--space-6);
+    border: 2px solid #55555550;
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #88888825;
+    color: white;
+  }
+
+  .modal-btn:hover {
+    background: #88888850;
+    transform: translateY(-1px);
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleUp {
+    to { transform: scale(1); }
+  }
+</style>

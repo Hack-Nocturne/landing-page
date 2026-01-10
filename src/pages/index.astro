@@ -11,7 +11,7 @@ import Footer from "../components/Footer.astro";
 
 const title = "Hack-Nocturne '26 | The Premier Hackathon Experience";
 const description =
-  "Join Hack-Nocturne '26, a 24-hour hackathon at Sir MVIT Bengaluru on March 13-14. Open track, ₹1,50,000+ in prizes, exciting swags, refreshments & internship opportunities. Through the Night, Ideas Take Flight!";
+  "Join Hack-Nocturne '26, a 24-hour hackathon at Sir MVIT Bengaluru on March 13-14. Open track, ₹1,00,000+ in prizes, exciting swags, refreshments & internship opportunities. Through the Night, Ideas Take Flight!";
 ---
 
 <Layout title={title} description={description}>
@@ -115,6 +115,8 @@ const description =
       </div>
     </section>
 
+    <div class="section-separator"></div>
+
     <!-- About Section -->
     <section id="about" class="section">
       <div class="container">
@@ -172,6 +174,8 @@ const description =
         </div>
       </div>
     </section>
+
+    <div class="section-separator"></div>
 
     <!-- Key Details Section -->
     <section id="details" class="section">
@@ -253,16 +257,18 @@ const description =
       </div>
     </section>
 
+    <div class="section-separator"></div>
+
     <!-- Prizes Section -->
     <section id="prizes" class="section">
       <div class="container">
         <div class="section-header text-center">
-          <h2 class="section-title">Previous Prizes</h2>
+          <h2 class="section-title">Prizes</h2>
           <p class="section-subtitle">
             Exciting rewards and swags await the most innovative minds
           </p>
           <div class="total-prize">
-            <span class="prize-amount">₹50,000+</span>
+            <span class="prize-amount">₹85,000+</span>
             <span class="prize-label">Total Prize Pool</span>
           </div>
         </div>
@@ -270,6 +276,8 @@ const description =
         <Prize />
       </div>
     </section>
+
+    <div class="section-separator"></div>
 
     <!-- Timeline Section -->
     <section id="timeline" class="section">
@@ -280,16 +288,17 @@ const description =
             24-hour journey from idea to implementation
           </p>
         </div>
-
         <Timeline />
       </div>
     </section>
+
+    <div class="section-separator"></div>
 
     <!-- Sponsors Section -->
     <section id="sponsors" class="section">
       <div class="container">
         <div class="section-header text-center">
-          <h2 class="section-title">Our Past Sponsors</h2>
+          <h2 class="section-title">Sponsors</h2>
           <p class="section-subtitle">
             Partnering with industry leaders to make innovation possible
           </p>
@@ -298,6 +307,8 @@ const description =
         <Sponsors />
       </div>
     </section>
+
+    <div class="section-separator"></div>
 
     <!-- FAQ Section -->
     <section id="faq" class="section">
@@ -310,6 +321,8 @@ const description =
         <FAQ />
       </div>
     </section>
+
+    <div class="section-separator"></div>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
@@ -819,5 +832,16 @@ const description =
   @keyframes slideDown {
     from { transform: translate(-50%, -100%); opacity: 0; }
     to { transform: translate(-50%, 0); opacity: 1; }
+  }
+
+  .section-separator {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(139, 69, 255, 0.75), rgba(0, 0, 0, 0));
+    margin: 2rem auto;
+    width: 80%;
+    transform: rotate(-2deg);
+    opacity: 0.6;
+    filter: blur(0.5px);
   }
 </style>

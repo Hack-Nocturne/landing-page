@@ -11,23 +11,40 @@ const prizes: PrizeData[] = [
   {
     icon: "🏆",
     title: "Winner",
-    amount: "₹25,000",
-    winner: "Losers",
+    amount: "₹35,000",
+    winner: null,
     color: "#FFD700"
   },
   {
     icon: "🥈", 
     title: "Runner Up",
-    amount: "₹15,000",
-    winner: "CodeWin",
+    amount: "₹25,000",
+    winner: null,
     color: "#C0C0C0"
   },
   {
     icon: "🥉",
     title: "Second Runner Up", 
-    amount: "₹10,000",
-    winner: "CodeX",
+    amount: "₹15,000",
+    winner: null,
     color: "#CD7F32"
+  }
+];
+
+const subPrizes: PrizeData[] = [
+  {
+    icon: "🌟",
+    title: "Best Implementation",
+    amount: "₹5,000",
+    winner: null,
+    color: "#60A5FA"
+  },
+  {
+    icon: "👩‍💻",
+    title: "Unique Idea", 
+    amount: "₹5,000",
+    winner: null,
+    color: "#F472B6"
   }
 ];
 ---
@@ -53,6 +70,35 @@ const prizes: PrizeData[] = [
       </div>
     </div>
   ))}
+</div>
+
+<div class="sub-prizes-section">
+  <div class="sub-prizes-notice">
+    <p><b>Track based prize</b>: 💪 Exciting and unique challenge awaits! Details will be revealed on the day of the hackathon to claim one of the following prizes.</p>
+  </div>
+
+  <div class="prizes-container sub-prizes-list">
+    {subPrizes.map((prize) => (
+      <div class="prize-card sub-prize-card" style={`--prize-color: ${prize.color}`}>
+        <div class="prize-header">
+          <div class="prize-icon">{prize.icon}</div>
+          <div class="prize-content">
+            <h3 class="prize-title">{prize.title}</h3>
+            <div class="prize-amount">{prize.amount}</div>
+            {prize.winner ? (
+              <div class="prize-winner">
+                <span class="winner-name">Goes To :&nbsp;<b>{prize.winner}</b></span>
+              </div>
+            ) : (
+              <div class="prize-tba">
+                <span class="tba-text">Winner TBA</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
 </div>
 
 <style>
@@ -236,7 +282,89 @@ const prizes: PrizeData[] = [
     --prize-color-rgb: 205, 127, 50; /* Bronze */
   }
 
+  .prize-card[style*="--prize-color: #60A5FA"] {
+    --prize-color-rgb: 96, 165, 250; /* Blue */
+  }
+  
+  .prize-card[style*="--prize-color: #F472B6"] {
+    --prize-color-rgb: 244, 114, 182; /* Pink */
+  }
+
   .prize-card:hover {
     will-change: auto;
+  }
+  
+  /* Sub Prize Styling */
+  .sub-prizes-section {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .sub-prizes-notice {
+    text-align: center;
+    max-width: 600px;
+    padding: 10px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border: 1px dashed var(--color-frosted-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .sub-prizes-list {
+    margin-top: 0;
+    justify-content: center;
+  }
+
+  .sub-prize-card {
+    min-width: 250px;
+    max-width: 280px;
+    padding: 1.25rem;
+    background: rgba(var(--prize-color-rgb), 0.05); /* Lighter background */
+    border-width: 1px;
+    box-shadow: none;
+    align-self: center;
+  }
+
+  @media (min-width: 640px) {
+    .sub-prize-card {
+      max-width: 280px;
+    }
+  }
+
+  .sub-prize-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(var(--prize-color-rgb), 0.2);
+  }
+
+  .sub-prize-card .prize-icon {
+    font-size: 2rem;
+  }
+
+  .sub-prize-card .prize-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sub-prize-card .prize-amount {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--prize-color);
+    filter: none; /* Remove golden glow for sub prizes */
+  }
+
+  .sub-prize-card .tba-text,
+  .sub-prize-card .winner-name {
+    padding: 0.5rem;
+    font-size: 0.8rem;
   }
 </style>
