@@ -177,7 +177,7 @@ import '../styles/global.css';
   let leadMember: any = null;
 
   try {
-    const response = await fetch(`${API_BASE}/g/payment/teams-n-price?et_code=${et_code}`);
+    const response = await fetch(`${API_BASE}/g/payment/teams-n-price?et_code=${encodeURIComponent(et_code)}`);
     if (!response.ok) throw new Error('Failed to fetch team details');
     teamData = await response.json();
   } catch (error) {
