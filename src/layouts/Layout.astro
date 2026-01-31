@@ -13,7 +13,7 @@ export interface Props {
 const { title, description, image, url } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImage = image ? new URL(image, Astro.url).href : new URL('/cover.webp', Astro.url).href;
+const socialImage = image ? new URL(image, Astro.url).href : new URL('/cover-2.webp', Astro.url).href;
 ---
 
 <!DOCTYPE html>
@@ -118,7 +118,7 @@ const socialImage = image ? new URL(image, Astro.url).href : new URL('/cover.web
           "validFrom": "2026-03-13T00:00:00+05:30",
           "validThrough": "2026-03-14T18:00:00+05:30"
         },
-        "image": "https://hack-nocturne.in/cover.webp",
+        "image": "https://hack-nocturne.in/cover-2.webp",
         "sameAs": "https://hack-nocturne.devfolio.co/",
         "url": "https://hack-nocturne.in"
       }
