@@ -9,6 +9,7 @@ import Sponsors from "../components/Sponsors.astro";
 import Prize from "../components/Prize.astro";
 import Footer from "../components/Footer.astro";
 
+const azureIcon = "/icons/azure.svg";
 const title = "Hack-Nocturne '26 | The Premier Hackathon Experience";
 const description =
   "Join Hack-Nocturne '26, a 24-hour hackathon at Sir MVIT Bengaluru on March 13-14. Open track, ₹1,20,000+ in prizes, exciting swags, refreshments & internship opportunities. Through the Night, Ideas Take Flight!";
@@ -108,6 +109,17 @@ const description =
                 height="60"
               />
             </a>
+          </div>
+        </div>
+
+        <!-- Azure Credits Banner -->
+        <div class="azure-banner">
+          <div class="azure-icon-wrapper">
+            <img src={azureIcon} alt="Azure Icon" loading="lazy" />
+          </div>
+          <div class="azure-content">
+            <span class="wild-tag">🚀 CLOUD SUPERCHARGE!</span>
+            <span class="azure-text">Get <span class="highlight">$500 in pooled Azure Credits</span> on demand to build your hack, during the event!</span>
           </div>
         </div>
 
@@ -843,5 +855,130 @@ const description =
     transform: rotate(-2deg);
     opacity: 0.6;
     filter: blur(0.5px);
+  }
+
+  /* Azure Banner Styles */
+  .azure-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(90deg, rgba(0, 120, 212, 0.15), rgba(139, 69, 255, 0.05));
+    border: 1px solid rgba(0, 120, 212, 0.4);
+    border-radius: 100px; /* Pill shape for tag/ribbon feel */
+    padding: 0.5rem 1rem;
+    /* margin-bottom: 2.5rem; */
+    backdrop-filter: blur(10px);
+    box-shadow: 
+      0 0 0 1px rgba(0, 120, 212, 0.1),
+      0 8px 20px -6px rgba(0, 120, 212, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .azure-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transition: 0.5s;
+    pointer-events: none;
+  }
+
+  .azure-banner:hover::before {
+    left: 100%;
+  }
+
+  .azure-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+      0 0 0 1px rgba(0, 120, 212, 0.3),
+      0 12px 28px -8px rgba(0, 120, 212, 0.5);
+    border-color: rgba(0, 120, 212, 0.6);
+  }
+
+  .azure-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    position: relative;
+  }
+
+  .azure-icon {
+    width: 36px;
+    height: 36px;
+    fill: #0078D4;
+    filter: 
+      drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))
+      drop-shadow(2px 2px 0px rgba(0, 60, 120, 0.8)) /* 3D Depth */
+      drop-shadow(0 0 10px rgba(0, 120, 212, 0.4)); /* Glow */
+    transform: perspective(500px) rotateY(15deg) rotateX(10deg);
+    transition: transform 0.4s ease;
+  }
+
+  .azure-banner:hover .azure-icon {
+    transform: perspective(500px) rotateY(0deg) rotateX(0deg) scale(1.1);
+  }
+
+  .azure-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .wild-tag {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #0078D4; /* Fallback for transparency */
+    background: linear-gradient(135deg, #0078D4, #00C7F4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.1rem;
+    text-shadow: 0 2px 10px rgba(0, 120, 212, 0.3);
+  }
+
+  .azure-text {
+    font-size: 0.95rem;
+    color: var(--color-gray-200);
+    line-height: 1.3;
+  }
+
+  .azure-text .highlight {
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(0, 120, 212, 0.6);
+  }
+
+  @media (max-width: 640px) {
+    .azure-banner {
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem;
+      gap: 0.5rem;
+      border-radius: var(--radius-xl);
+      width: 100%;
+    }
+    
+    .azure-content {
+      align-items: center;
+      text-align: center;
+    }
+    
+    .wild-tag {
+      font-size: 0.75rem;
+    }
   }
 </style>
